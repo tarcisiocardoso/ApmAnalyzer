@@ -1,0 +1,216 @@
+
+			<div class="header-section">
+				<!-- banner -->
+				<div class="banner about-banner">
+					<div class="container">
+						<div class="header">
+							<div class="top-nav">
+									<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s2">
+										<h2>Sidebar</h2>
+										<ul>
+											<li><a href="index.html">Home</a></li>
+											<li><a class="active" href="about.html">Nova ação</a></li>
+											<li><a href="typography.html">Editar</a></li>
+											<li><a href="gallery.html">Ecluir</a></li>
+											<li><a href="blog.html">Blog</a></li>
+											<li><a href="contact.html">Contact</a></li>
+										</ul>
+
+									</nav>
+									<div class="main buttonset">	
+											<!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
+											<button id="showRightPush"><img src="images/menu.png" alt=""/></button>
+											<!--<span class="menu"></span>-->
+									</div>
+									<!-- Classie - class helper functions by @desandro https://github.com/desandro/classie -->
+									<script src="js/classie.js"></script>
+									<script>
+										var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+										showRightPush = document.getElementById( 'showRightPush' ),
+										body = document.body;
+
+										showRightPush.onclick = function() {
+											classie.toggle( this, 'active' );
+											classie.toggle( body, 'cbp-spmenu-push-toleft' );
+											classie.toggle( menuRight, 'cbp-spmenu-open' );
+											disableOther( 'showRightPush' );
+										};
+
+										function disableOther( button ) {
+											if( button !== 'showRightPush' ) {
+												classie.toggle( showRightPush, 'disabled' );
+											}
+										}
+									 </script>
+							</div>
+							<div class="logo wow fadeInDown animated" data-wow-delay=".0s">
+								<h1><a href="index.html">XysAnalyzer - execução</a></h1>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					</div>
+				</div>
+				<!-- //banner -->
+				
+				<!-- about -->
+				<div class="about">
+					<div class="about-heading" id='acaoContainer'>
+						<div class="container">
+							<div class="about-heading-info wow fadeInDown animated" data-wow-delay=".0s" id='idAcao'>
+								<a href='#' onClick="showAcao('relatorio_faturamento'); return false;"><h4>Teste de Carga</h4></a>
+								<a href="../acao/teste_carga/index.html"><h4>Ação 01</h4></a>
+								<a href="../acao/teste_carga/index.html"><h4>Ação 02</h4></a>
+							</div>
+							<div class="about-heading-bottom">
+								<div class="col-md-4 about-heading-left wow fadeInLeft animated" data-wow-delay=".0s">
+									<img src="images/1.jpg" alt="" />
+								</div>
+								<div class="col-md-8 about-heading-right wow fadeInRight animated" data-wow-delay=".0s">
+									<h4>Colocar aqui ações que devem ser feita de acordo com edital ou acordado com o cliente</h4>
+									<p>Sed venenatis euismod massa, ut dapibus est pretium nec. Curabitur fringilla velit mauris, quis sodales turpis semper vestibulum. Suspendisse potenti. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras tincidunt elementum leo.Proin mattis leo libero, eu placerat diam mattis vel. Nulla enim massa, vulputate et risus nec, tempus sodales metus.</p>
+									<a href="single.html">Nova ação</a>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+							
+							<div class="team">
+									<div class="team-info wow fadeInDown animated" data-wow-delay=".0s">
+										<h3>Work Team</h3>
+									</div>
+									<div class="team-grids">
+										<div class="col-md-4 team-grid wow fadeInLeft animated" data-wow-delay=".0s">
+											<img src="images/t1.jpg" alt="">
+											<h4>Nullam ornare metus</h4>
+											<p>Proin vitae luctus dui, sit amet ultricies leo. Donec condimentum, mauris et pharetra molestie, dolor dui dignissim metus, a malesuada elit odio non velit.</p>
+											<div class="icons wow fadeInUp animated" data-wow-delay=".0s">
+												<ul>
+													<li><a href="#" class="twitter"></a></li>
+													<li><a href="#" class="twitter facebook"></a></li>
+													<li><a href="#" class="twitter chrome"></a></li>
+													<li><a href="#" class="twitter dribbble"></a></li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-4 team-grid wow fadeInUp animated" data-wow-delay=".0s">
+											<img src="images/t2.jpg" alt="">
+											<h4>Donec condimentum</h4>
+											<p>Proin vitae luctus dui, sit amet ultricies leo. Donec condimentum, mauris et pharetra molestie, dolor dui dignissim metus, a malesuada elit odio non velit.</p>
+											<div class="icons wow fadeInUp animated" data-wow-delay=".0s">
+												<ul>
+													<li><a href="#" class="twitter"></a></li>
+													<li><a href="#" class="twitter facebook"></a></li>
+													<li><a href="#" class="twitter chrome"></a></li>
+													<li><a href="#" class="twitter dribbble"></a></li>
+												</ul>
+											</div>
+										</div>
+										<div class="col-md-4 team-grid wow fadeInRight animated" data-wow-delay=".0s">
+											<img src="images/t3.jpg" alt="">
+											<h4>Paretra molestie</h4>
+											<p>Proin vitae luctus dui, sit amet ultricies leo. Donec condimentum, mauris et pharetra molestie, dolor dui dignissim metus, a malesuada elit odio non velit.</p>
+											<div class="icons wow fadeInUp animated" data-wow-delay=".0s">
+												<ul>
+													<li><a href="#" class="twitter"></a></li>
+													<li><a href="#" class="twitter facebook"></a></li>
+													<li><a href="#" class="twitter chrome"></a></li>
+													<li><a href="#" class="twitter dribbble"></a></li>
+												</ul>
+											</div>
+										</div>
+										<div class="clearfix"> </div>
+								</div>
+							</div>
+							
+							<div class="choose">
+								<div class="choose-info wow fadeInDown animated" data-wow-delay=".0s">
+									<h3>Why Choose Us</h3>
+								</div>
+								<div class="choose-grids">
+									<div class="col-md-4 choose-grid wow fadeInLeft animated" data-wow-delay=".0s">
+										<h4>Donec condimentum</h4>
+										<p>In felis mi, tempor nec scelerisque et, dignissim ut nisl. Ut ac mauris vitae nisi finibus tincidunt. Duis rhoncus ante ut odio fermentum, quis pharetra arcu interdum.</p>
+										<a href="single.html">Read More</a>
+									</div>
+									<div class="col-md-4 choose-grid wow fadeInUp animated" data-wow-delay=".0s">
+										<h4>Aliquam porta rutrum</h4>
+										<p>In felis mi, tempor nec scelerisque et, dignissim ut nisl. Ut ac mauris vitae nisi finibus tincidunt. Duis rhoncus ante ut odio fermentum, quis pharetra arcu interdum.</p>
+										<a href="single.html">Read More</a>
+									</div>
+									<div class="col-md-4 choose-grid wow fadeInRight animated" data-wow-delay=".0s">
+										<h4>Sed ut diam risus</h4>
+										<p>In felis mi, tempor nec scelerisque et, dignissim ut nisl. Ut ac mauris vitae nisi finibus tincidunt. Duis rhoncus ante ut odio fermentum, quis pharetra arcu interdum.</p>
+										<a href="single.html">Read More</a>
+									</div>
+									<div class="clearfix"> </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //about -->
+				<!-- footer -->
+				<div class="footer">
+					<div class="container">
+						<div class="footer-grids">
+							<div class="col-md-4 footer-left wow fadeInLeft animated" data-wow-delay=".0s">
+								<div class="footer-left-heading">
+									<a href="index.html">XysAnalyzer - execução</a>
+								</div>
+								<div class="footer-left-bottom">
+									<p>Eiusmod Tempor inc
+										<span>St Dolore Place,Kingsport 56777.</span>
+									</p>
+									<p class="phone">Phone : +1 123 456 789
+									<span>Email : <a href="mailto:example@email.com">mail@example.com</a></span>
+									</p>
+								</div>
+							</div>
+							<div class="col-md-4 footer-middle wow fadeInUp animated" data-wow-delay=".0s">
+								<div class="footer-middle-heading">
+									<h3>Navigation</h3>
+								</div>
+								<div class="footer-middle-bottom">
+									<ul>
+										<li><a href="about.html">About</a></li>
+										<li><a href="typography.html">Typography</a></li>
+										<li><a href="gallery.html">Gallery</a></li>
+										<li><a href="blog.html">Blog</a></li>
+										<li><a href="contact.html">Contact</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-md-4 footer-right wow fadeInRight animated" data-wow-delay=".0s">
+								<div class="footer-middle-heading footer-right-heading">
+									<h3>Here from us</h3>
+								</div>
+								<div class="footer-right-bottom">
+									<p>Nunc non feugiat quam, vitae placerat ipsum. Cras at felis congue, volutpat neque eget</p>
+									<form>
+										<input type="email" id="mc4wp_email" name="EMAIL" placeholder="Enter your email here" required="">
+										<input type="submit" value="Subscribe">
+									</form>
+								</div>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="footer-bottom">
+							<div class="footer-bottom-grids">
+								<div class="footer-bottom-left wow fadeInLeft animated" data-wow-delay=".0s">
+									<p>© 2016 XysAnalyzer . All Rights Reserved . Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+								</div>
+								<div class="footer-bottom-right icons wow fadeInRight animated" data-wow-delay=".0s">
+									<ul>
+										<li><a href="#" class="twitter"></a></li>
+										<li><a href="#" class="twitter facebook"></a></li>
+										<li><a href="#" class="twitter chrome"></a></li>
+										<li><a href="#" class="twitter dribbble"></a></li>
+									</ul>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //footer -->
+ 			</div>
+		

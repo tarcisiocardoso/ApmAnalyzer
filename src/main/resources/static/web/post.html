@@ -1,0 +1,46 @@
+<html>
+<head>
+<script>
+function vai(){
+	var data = '{"id":"xx","nome":"So um este","questoes":[{"nome":"Nome da Questao01","id":"q1","help":{"nomeHelp":"titulo","doc":"<div>alguma coisa</div>"},"respostas":[{"nome":"Nome da Questao01","id":"q1","help":{"nomeHelp":"titulo","doc":"<div>alguma coisa</div>"}},{"nome":"Resposta 01.01","id":"r1","help":{"nomeHelp":"titulo","doc":"<div>alguma coisa da resposta</div>"}},{"nome":"Resposta","id":"3","help":null}]},{"nome":"Nome da Questao02","id":"q2","help":null,"respostas":[{"nome":"Nome da Questao02","id":"q2","help":null},{"nome":"resposta01","id":"r1","help":{"nomeHelp":"titulo","doc":"<div>alguma coisa da resposta</div>"}}]}]}';
+	//var json = JSON.parse( data );
+	//console.log( json );
+	
+	$.ajax({
+	    headers: { 
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json' 
+	    },
+	    'type': 'POST',
+	    'url': '/analise',
+	    'data': data,
+	    'dataType': 'json',
+	    'success': function ( j ){
+	    		console.log( j );
+	    	}
+	    });
+	/* 
+	$.post( "/analise",  json )	
+		.done(function( json ) {
+			console.log(json);
+	   });*/
+}
+</script>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>	
+
+
+</head>
+<body>
+
+<script>vai();</script>
+</body>
+
+</html>
