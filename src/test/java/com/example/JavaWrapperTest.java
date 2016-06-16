@@ -2,9 +2,7 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import br.com.xyx.apmanalyzer.desktop.JavaWrapper;
 import br.com.xyx.apmanalyzer.server.controller.acao.Acao;
@@ -17,6 +15,19 @@ import junit.framework.TestCase;
 
 public class JavaWrapperTest extends TestCase{
 
+	public void testSalvaAcao(){
+		String id = null;
+		String nome = "aaaa";
+		String conteudo = "<b>de qual e</b>";
+		try {
+			JavaWrapper w = new JavaWrapper();
+			id = w.salvaAcao( id, nome, conteudo );
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals( id != null, true );
+	}
 	public void testSalvaAnaliseAtributo(){
 		//Object {idAnalise: "xptoII", id: "q01", valor: "xxxx"}
 		String id = null;

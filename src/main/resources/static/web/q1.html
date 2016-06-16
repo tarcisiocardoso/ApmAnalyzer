@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"
+	content="Sistema de gerenciamento de produção de ovinos/caprinos">
+<meta name="author" content="Tarcisio Cardoso">
+
+<title>XysAnaliser - Auxiliar para analise de performance</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="xys, apm, analyzer" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- bootstrap-css -->
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<!--// bootstrap-css -->
+<!-- css -->
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+<!--// css -->
+
+<!-- font -->
+<!-- Custom Fonts -->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href='//fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!-- //font -->
+ <link rel="stylesheet" type="text/css" href="./trix/trix.css">
+ <script type="text/javascript"         src="./trix/trix.js"></script>
+ <script type="text/javascript"         src="./trix/attachments.js"></script>
+
+<script type="text/javascript" src="js/comoFazer.js"></script>
+<script type="text/javascript" src="js/acao.js"></script>
+<script type="text/javascript" src="js/proposta.js"></script>
+<script type="text/javascript" src="js/analise.js"></script>
+<script type="text/javascript" src="js/wrapper.js"></script>
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>	
+<!--animate-->
+<link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
+<script src="js/wow.min.js"></script>
+	<script>
+		 new WOW().init();
+	</script>
+<!--//end-animate-->
+<link href="css/component.css" rel="stylesheet" type="text/css"  />
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+
+	<script>
+	function alerta(){
+		console.log('Entrou no alerta');
+		alert('teste');
+	}
+	function kb(me){
+		console.log('.....');
+		var p = me.parentElement;
+		
+		var cn = p.lastChild.className
+		if( cn == 'panel-body'){
+			console.log('remover...');
+			p.removeChild(p.lastChild);
+		}else{
+			console.log(p.lastChild.className);
+			
+			var div = document.createElement('div');
+			div.className = 'panel-body';
+			
+			var html =
+		    	'\
+				<div class="panel panel-primary">\
+	                 <h1>Para solucionar esse problema deve fazer os seguintes pontos</h1>\
+	                 <ul>\
+	                   <li>pontos aaaaa</li>\
+	                   <li>pontos bbb</li>\
+	                   <li>pontos ccc</li>\
+	                 </ul>\
+	            </div>\
+		    	';
+	            
+	        div.innerHTML = html; 
+		    p.appendChild(div);
+		}
+	}
+	function help(){
+		console.log('.....');
+		$('#myModal').modal('show')
+	}
+	function soDeVer(me){
+		console.log('xxxxx', me);
+		var p = me.parentElement;
+		console.log(p);
+		
+		if(me.checked ){
+			var div = document.createElement('div');
+	
+		    div.className = 'panel-body';
+	
+		    var html =
+		    	'\
+				<div class="panel panel-primary">\
+	                         <div class="panel-heading">\
+	                             <h3 class="panel-title"><i class="fa fa-file-image-o"></i>Questao01.02\
+	                             	<button class="btn btn-default" type="button" onClick="help()"><i class="fa fa-question"></i></button>\
+	                             </h3>\
+	                         </div>\
+	                         <div class="panel-body">\
+	                           	<div >\
+	                                <input type="checkbox" onchange="soDeVer(this);" value="">resposta 01\
+	                                <button class="btn btn-default" type="button" onClick="help()"><i class="fa fa-question"></i></button>\
+	                            </div>	\
+	                            <div >\
+	                                <input type="checkbox" onchange="soDeVer(this);" value="">resposta 02\
+	                            </div>\
+	                            <div >\
+	                                <input type="checkbox" onchange="soDeVer(this);" value="">resposta 03\
+	                            </div>\
+	                         </div>\
+	                     </div>\
+		    	';
+	            
+	        div.innerHTML = html; 
+		    p.appendChild(div);
+		}else{
+			console.log('remover...');
+			p.removeChild(p.lastChild);
+		}
+	}
+	</script>
+
+</head>
+
+<body>
+	<div id="wrapper">
+	<div id="page-wrapper">
+	  <div class="container-fluid">
+                            
+            <div class="row">
+                 <div class="col-lg-12">
+                     <div class="panel panel-primary">
+                         <div class="panel-heading">
+                             <h3 class="panel-title"><i class="fa fa-file-image-o"></i>Questao01 - Verificar como esta a saude da aplicação
+                             	<button class="btn btn-default" type="button" onClick="help()"><i class="fa fa-question"></i></button>
+                             </h3>
+                         </div>
+                         <div class="panel-body">
+                           	<div >
+                                <input type="checkbox" onchange="soDeVer(this);" value="">resposta 01 - Verificar EUE
+                                <button class="btn btn-default" type="button" onClick="help()"><i class="fa fa-question"></i></button>
+                            </div>	
+                            <div >
+                                <input type="checkbox" onchange="soDeVer(this);" value="">resposta 02 - Verificar consumo de memoria
+                            </div>
+                            <div >
+                                <input type="checkbox" value="">resposta 03
+                                <button class="btn btn-default" type="button" onClick="help()"><i class="fa fa-question"></i></button>
+                                <button class="btn btn-default" type="button" onClick="kb(this)"><i class="fa fa-life-ring"></i></button>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <div class="col-lg-12">
+                     <div class="panel panel-primary">
+                         <div class="panel-heading">
+                             <h3 class="panel-title"><i class="fa fa-file-image-o"></i>Questao02 - Verificar como esta os recursos da aplicação
+                             	<button class="btn btn-default" type="button" onClick="help()"><i class="fa fa-question"></i></button>
+                             </h3>
+                             
+                         </div>
+                         <div class="panel-body">
+                           	<div >
+                                <input type="checkbox" onchange="soDeVer(this);" value="">resposta 01 - Verificar EUE
+                                <button class="btn btn-default" type="button" onClick="help()"><i class="fa fa-question"></i></button>
+                            </div>	
+                            <div >
+                                <input type="checkbox" onchange="soDeVer(this);" value="">resposta 02 - Verificar consumo de memoria
+                            </div>
+                            <div >
+                                <input type="checkbox" value="">resposta 03
+                                <button class="btn btn-default" type="button" onClick="help()"><i class="fa fa-question"></i></button>
+                                <button class="btn btn-default" type="button" onClick="kb(this)"><i class="fa fa-life-ring"></i></button>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+	  </div>
+	</div>
+	</div>
+        
+</body>
+
+</html>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Instruções para responder as questões</h4>
+      </div>
+      <div class="modal-body">
+        <p><h1>Conteudo html para nortear o consultor</h1></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+

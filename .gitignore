@@ -4,6 +4,12 @@ target/
 /build
 /upload-dir
 upload-dir/
+src/main/resources/static/web/upload/
+src/main/resources/static/web/acao/
+src/main/resources/static/web/analise/
+src/main/resources/static/web/app/acao/
+src/main/resources/static/web/como_fazer/
+
 
 
 # Eclipse artifacts, including WTP generated manifests

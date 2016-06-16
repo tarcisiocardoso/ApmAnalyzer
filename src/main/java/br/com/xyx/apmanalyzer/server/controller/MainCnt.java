@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.xyx.apmanalyzer.desktop.JavaWrapper;
 import br.com.xyx.apmanalyzer.server.controller.acao.Acao;
 import br.com.xyx.apmanalyzer.server.controller.acao.AcaoCmd;
 import br.com.xyx.apmanalyzer.server.controller.analise.Analise;
@@ -50,6 +51,29 @@ public class MainCnt {
 		}
         
         return new RespostaSimples(true, identificador );
+    }
+	
+	@RequestMapping(value = "/acao", method = RequestMethod.POST)
+    public RespostaSimples saveAcao(HttpServletRequest request){
+       
+		String idAcao = request.getParameter("idAcao");
+		String nomeAcao = request.getParameter("nomeAcao");
+        String conteudo = request.getParameter("conteudo");
+        
+        System.out.println(idAcao);
+        System.out.println(nomeAcao);
+        System.out.println(conteudo);
+        
+        JavaWrapper w = new JavaWrapper();
+		String id = "nok";
+		try {
+			id = w.salvaAcao( idAcao, nomeAcao, conteudo );
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new RespostaSimples(false, "Problema ao gravar ação: "+e.getMessage() );
+		}
+        
+        return new RespostaSimples(true, id );
     }
 	
 	@RequestMapping(value="/comoFazer")

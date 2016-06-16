@@ -33,6 +33,7 @@ import br.com.xyx.apmanalyzer.server.controller.proposta.Proposta;
 public class JavaWrapper {
 
 	private static final String PATH = "src/main/resources/static/web/";
+	private static final String PATH_ACAO = PATH + "/acao";
 	private static final String PATH_COMO_FAZER = PATH + "/como_fazer";
 	private static final String PATH_ANALISE = PATH + "/analise";
 
@@ -176,19 +177,51 @@ public class JavaWrapper {
 	public void log(String msg) {
 		System.out.println(msg);
 	}
-
-	public String savaComoFazer(ComoFazer comoFazer) throws Exception {
-		if( comoFazer.nome == null || comoFazer.nome.trim().length() == 0){
-			throw new Exception("Nome obrigatório");
-		}
-		if (comoFazer.id == null || comoFazer.id.trim().length() == 0) {
-			String nm = comoFazer.nome;
+	private String formatId(String id, String nome ){
+		if (id == null || id.trim().length() == 0) {
+			String nm = nome;
 			nm = nm.replaceAll(" ", "_");
 			if (nm.length() > 10) {
 				nm = nm.substring(0, 10);
 			}
-			comoFazer.id = System.currentTimeMillis() + "_" + nm;
+			id = System.currentTimeMillis() + "_" + nm;
 		}
+		return id;
+	}
+	public String salvaAcao(String id, String nome, String conteudo) throws Exception {
+		if( nome == null || nome.trim().length() == 0){
+			throw new Exception("Nome obrigatório");
+		}
+		if( nome == null || nome.trim().length() == 0){
+			throw new Exception("Conteudo obrigatório");
+		}
+		id = formatId(id, nome);
+		
+		File file = new File(PATH_ACAO + "/" + id);
+		try {
+			if (file.isDirectory()) { // ja existe. Atualiza
+				saveFile(file.getCanonicalPath(), conteudo);
+			} else {
+				addInit(PATH_ACAO, id, nome);
+				// file.mkdir();
+				Path path = Paths.get(file.getCanonicalPath());
+				Files.createDirectories(path);
+
+				saveFile(file.getCanonicalPath(), conteudo);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return id;
+	}	
+	public String savaComoFazer(ComoFazer comoFazer) throws Exception {
+		if( comoFazer.nome == null || comoFazer.nome.trim().length() == 0){
+			throw new Exception("Nome obrigatório");
+		}
+		comoFazer.id = formatId(comoFazer.id, comoFazer.nome);
+		
 		File file = new File(PATH_COMO_FAZER + "/" + comoFazer.id);
 		try {
 			if (file.isDirectory()) { // ja existe. Atualiza
@@ -328,14 +361,8 @@ public class JavaWrapper {
 			throw new Exception("Ao menos uma resposta deve ser informada");
 		}
 		
-		if (analise.id == null || analise.id.trim().length() == 0) {
-			String nm = analise.nome;
-			nm = nm.replaceAll(" ", "_");
-			if (nm.length() > 10) {
-				nm = nm.substring(0, 10);
-			}
-			analise.id = System.currentTimeMillis() + "_" + nm;
-		}
+		analise.id = formatId(analise.id, analise.nome);
+		
 		File file = new File(PATH_ANALISE + "/" + analise.id);
 		try {
 			if (!file.isDirectory()) { // ja existe. Atualiza
@@ -354,14 +381,8 @@ public class JavaWrapper {
 		return analise.id;
 	}
 	private void salvaQuestao(Questao questao, String path) {
-		if (questao.id == null || questao.id.trim().length() == 0) {
-			String nm = questao.nome;
-			nm = nm.replaceAll(" ", "_");
-			if (nm.length() > 10) {
-				nm = nm.substring(0, 10);
-			}
-			questao.id = System.currentTimeMillis() + "_" + nm;
-		}
+		questao.id = formatId(questao.id, questao.nome);
+		
 		File file = new File(path + "/" + questao.id);
 		try {
 			if (!file.isDirectory()) { // ja existe. Atualiza
@@ -380,14 +401,8 @@ public class JavaWrapper {
 		}
 	}
 	private void salvaResposta(Resposta resposta, String path) {
-		if (resposta.id == null || resposta.id.trim().length() == 0) {
-			String nm = resposta.nome;
-			nm = nm.replaceAll(" ", "_");
-			if (nm.length() > 10) {
-				nm = nm.substring(0, 10);
-			}
-			resposta.id = System.currentTimeMillis() + "_" + nm;
-		}
+		resposta.id = formatId(resposta.id, resposta.nome);
+		
 		File file = new File(path + "/" + resposta.id);
 		try {
 			if (!file.isDirectory()) { // ja existe. Atualiza
@@ -561,5 +576,6 @@ public class JavaWrapper {
 		}
 
 		return h;
-	}	
+	}
+
 }
