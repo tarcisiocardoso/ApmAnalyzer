@@ -34,8 +34,27 @@ public class MainCnt {
 //		return "{\"sucesso\": \"ok\", \"id\": 1}";
 //	}
 	
+	@RequestMapping(value = "/proposta", method = RequestMethod.POST, consumes="application/json",headers = "content-type=application/x-www-form-urlencoded")
+    public RespostaSimples savePropostaJson(HttpServletRequest request){
+       
+		System.out.println(request.getParameter("nome"));
+		String identificador = request.getParameter("identificador");
+        String nome = request.getParameter("nome");
+        String conteudo = request.getParameter("content");
+        Proposta proposta = new Proposta(identificador, nome, conteudo );
+        
+        try {
+        	identificador = (new PropostaCmd()).savaProposta(proposta);
+		} catch (Exception e) {
+//			e.printStackTrace();
+			return new RespostaSimples(false, e.getMessage() );
+		}
+        
+        return new RespostaSimples(true, identificador );
+    }
+	
 	@RequestMapping(value = "/comoFazer", method = RequestMethod.POST, consumes="application/json",headers = "content-type=application/x-www-form-urlencoded")
-    public RespostaSimples saveProfileJson(HttpServletRequest request){
+    public RespostaSimples saveHowToJson(HttpServletRequest request){
        
 		System.out.println(request.getParameter("nome"));
 		String identificador = request.getParameter("identificador");

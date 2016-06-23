@@ -5,16 +5,30 @@ import java.util.Collection;
 import java.util.List;
 
 import br.com.xyx.apmanalyzer.desktop.JavaWrapper;
-import br.com.xyx.apmanalyzer.server.controller.acao.Acao;
 import br.com.xyx.apmanalyzer.server.controller.analise.Analise;
 import br.com.xyx.apmanalyzer.server.controller.analise.Help;
 import br.com.xyx.apmanalyzer.server.controller.analise.Questao;
 import br.com.xyx.apmanalyzer.server.controller.analise.Resposta;
 import br.com.xyx.apmanalyzer.server.controller.comoFazer.ComoFazer;
+import br.com.xyx.apmanalyzer.server.controller.proposta.Proposta;
 import junit.framework.TestCase;
 
 public class JavaWrapperTest extends TestCase{
 
+	public void testSalvaProposta(){
+		String id = null;
+		String nome = "aaaa";
+		String conteudo = "<b>de qual e</b>";
+		try {
+			JavaWrapper w = new JavaWrapper();
+			id = w.salvaProposta(new Proposta( id, nome, conteudo) );
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals( id != null, true );
+	}
+	
 	public void testSalvaAcao(){
 		String id = null;
 		String nome = "aaaa";
@@ -85,7 +99,7 @@ public class JavaWrapperTest extends TestCase{
 		r.id = "r01";
 		r.nome = "Resposta 01";
 		r.help = h;
-		r.idComoFazer = "performance_basica";
+		r.propostas = new String[]{"1466515981834_Teste_Prop", "1466601520944_xxxxx"};
 		lr.add(r );
 		q.respostas = lr;
 		
@@ -98,7 +112,7 @@ public class JavaWrapperTest extends TestCase{
 		
 		String id = null;
 		try {
-			id = w.savaComoFazer( comoFazer );
+			id = w.salvaComoFazer( comoFazer );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -120,12 +134,14 @@ public class JavaWrapperTest extends TestCase{
 	public void testeAcao(){
 		JavaWrapper w = new JavaWrapper();
 		
-		Collection<Acao> list= w.getAllAcoes();
-		for (Acao acao : list) {
-			System.out.println( acao );
-		}
+//		Collection<Acao> list= w.getAllAcoes();
+//		for (Acao acao : list) {
+//			System.out.println( acao );
+//		}
+		String json = w.getAllAcaoAsJson();
+		System.out.println(json);
 		
-		assertEquals(list != null, true);
+		assertEquals(json.length()> 3, true);
 	}
 	public void testAnalise(){
 		JavaWrapper w = new JavaWrapper();

@@ -30,9 +30,8 @@ function Wrapper(){
 		if( typeof javaWrapper === "undefined"){
 			$.get( "/acoes", promisse);
 		}else{
-			console.log('nao implementado.....')
-//			var json = javaWrapper.getAllPropostasAsJson();
-//			promisse( JSON.parse(json) );
+			var json = javaWrapper.getAllAcaoAsJson();
+			promisse( JSON.parse(json) );
 		}
 	}
 }

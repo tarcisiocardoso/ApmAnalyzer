@@ -8,9 +8,9 @@
 										<h2>Sidebar</h2>
 										<ul>
 											<li><a href="index.html">Home</a></li>
-											<li><a class="active" href="#" onClick="novaAnalise(); return false;">Nova Analise</a></li>
-											<li><a href="#" onClick="entraModoEdicao(); return false;">Editar</a></li>
-											<li><a href="gallery.html">Ecluir</a></li>
+											<li><a class="active" href="#" onClick="novaProposta(); return false;">Nova proposta</a></li>
+											<li><a href="typography.html">Editar</a></li>
+											<li><a href="#" onClick="moduloExclusaoProposta(); return false;">Excluir</a></li>
 										</ul>
 
 									</nav>
@@ -40,48 +40,43 @@
 										}
 									 </script>
 							</div>
-							<div class="logo wow fadeInDown animated" data-wow-delay=".0s" id="tituloPagina">
-								<h1><a href="#" onClick="montaListaAnalise(); return false;">Analise</a></h1>
+							<div class="logo wow fadeInDown animated" data-wow-delay=".0s">
+								<h1><a href="index.html">XysAnalyzer</a></h1>
 							</div>
 							<div class="clearfix"> </div>
 						</div>
 					</div>
 				</div>
+				<!-- //banner -->
 				
-<!-- about -->
-<div class="about">
-	<div class="about-heading" id='analiseContainer'>
-		<div class="container">
-			<div class="about-heading-info wow fadeInDown animated" data-wow-delay=".0s" id='idAnalise'>
-				<a href="q1.html"><h4>Analise PROTOTIPO</h4></a>
-			</div>
-			<div class="about-heading-bottom">
-				<div class="col-md-8 about-heading-right wow fadeInRight animated" data-wow-delay=".0s">
-					<h4>Mecanismo de pergunta/proposta para ajudar o consultor analisar determinado problema montando um grafo de propostas a serem aplicadas.</h4>
-					<p>Cadastrar perguntas e resposta e qual cadeia de soluões aplicar a determinadas respostas ou conjunto de respostas</p>
-					
-					Depois da maturidade da atividade e do pleno conhecimento por algum membro da equipe, proceder o eguinte cadastro:
-					<ul>
-					    <li>Formular um documento no gooble driver que dê embasamento a execução da atividade a ser diceminada para a equipe</li>
-						<li>Montar um DOJO para ser apresentado para a equipe e fazer possiveis melhorias no processo que possa emergir da equipe</li>
-						<li>Cadastrar as informações sintetizadas no sistema</li>
-						<li>Como o sistema de grafo da teoria computacional requer um modelo de decisão, o final de cada resposta deve ser lincada com alguma propsota a ser apresentada para o cliente</li>
-					</ul>
-					<p>
-						<i>refs:</i>
-						<a href="https://pt.wikipedia.org/wiki/Cobertura_de_v%C3%A9rtices_(teoria_dos_grafos)">Teoria dos Grafos</a>
-						<a href="https://pt.wikipedia.org/wiki/Problema_de_decis%C3%A3o">Problema de decisão</a>
-					</p>
+				<!-- about -->
+				<div class="about" id='propostaContainer'>
+					<div class="about-heading">
+						<div class="container">
+							<div class="about-heading-info wow fadeInDown animated" data-wow-delay=".0s">
+								<ul id="idProposta">
+								
+								</ul>
+							</div>
+							<div class="about-heading-bottom">
+								<div class="col-md-8 about-heading-right wow fadeInRight animated" data-wow-delay=".0s">
+									<h4>Informações básicas para resolver problemas de APM</h4>
+									<p>Colocar aqui informações para nortear o consultor nas analises que dê ganho de performance nos aplicativos</p>
+									
+									Encontrado um novo tipo de problema ou identificado uma nova forma de solução, proceder da seguinte forma:
+									<ul>
+										<li>Formular um DOJO para ser apresentado para a equipe</li>
+										<li>Criar um documento que consiga sintetizar o conteudo apresentado no DOJO para novos membros e eventual consultas. </li>
+										<li>Cadastrar as informações sintetizadas no sistema</li>
+									</ul>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+							
+						</div>
+					</div>
 				</div>
-				<div class="clearfix"> </div>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-<!-- //about -->
+				<!-- //about -->
 				<!-- footer -->
 				<div class="footer">
 					<div class="container">

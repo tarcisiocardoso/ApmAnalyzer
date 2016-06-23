@@ -2,8 +2,6 @@ package br.com.xyx.apmanalyzer.desktop;
 
 import java.io.File;
 
-import org.w3c.dom.Document;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
@@ -46,6 +44,12 @@ public class Browser extends Region {
 	
 //			this.browser.getEngine().executeScript("if (!document.getElementById('FirebugLite')){E = document['createElement' + 'NS'] && document.documentElement.namespaceURI;E = E ? document['createElement' + 'NS'](E, 'script') : document['createElement']('script');E['setAttribute']('id', 'FirebugLite');E['setAttribute']('src', 'https://getfirebug.com/' + 'firebug-lite.js' + '#startOpened');E['setAttribute']('FirebugLite', '4');(document['getElementsByTagName']('head')[0] || document['getElementsByTagName']('body')[0]).appendChild(E);E = new Image;E['setAttribute']('src', 'https://getfirebug.com/' + '#startOpened');}");
 			
+	        com.sun.javafx.webkit.WebConsoleListener.setDefaultListener(new com.sun.javafx.webkit.WebConsoleListener(){
+	            @Override
+	            public void messageAdded(WebView webView, String message, int lineNumber, String sourceId) {
+	                System.out.println("Console: [" + sourceId + ":" + lineNumber + "] " + message);
+	            }
+	        });
             // load the web page
 //          String url = Browser.class.getResource("/index.html").toExternalForm();  
 //        	webEngine.load("http://localhost:1234/index.html");

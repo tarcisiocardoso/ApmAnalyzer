@@ -1,5 +1,4 @@
 function salvaNovoConhecimento(){
-	console.log('>>>>>>>>>>>>>>>');
 
 	var data = $( "#formulario" ).serialize();
 	
@@ -54,10 +53,8 @@ function openListaComoFazer(){
 	$("nav").removeClass( "cbp-spmenu-open" );
 	$("body").removeClass( "cbp-spmenu-push-toleft" );
 	
-	$.get( "app/como_fazer.html", function( data ) {
+	$.get( "app/howto/index.html", function( data ) {
 		  $( "body" ).html( data );
-		  
 		  montaListaComoFazer();
-		  
-		});
+	});
 }

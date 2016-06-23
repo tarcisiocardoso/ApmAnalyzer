@@ -17,7 +17,7 @@ public class MainApp extends Application{
 		// TODO Auto-generated method stub
 		// create the scene
         stage.setTitle("Web View");
-        scene = new Scene(new Browser(),800,500, Color.web("#666970"));
+        scene = new Scene(new Browser(),1024, 600, Color.web("#666970"));
         stage.setScene(scene);
         //scene.getStylesheets().add("resource/BrowserToolbar.css");        
         stage.show();		

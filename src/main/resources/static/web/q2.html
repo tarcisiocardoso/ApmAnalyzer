@@ -25,13 +25,52 @@
 <!-- font -->
 <!-- Custom Fonts -->
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<!-- 
 <link href='//fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+ -->
 <!-- //font -->
+
+ <script>
+ /* 
+ function loadjscssfile(filename, filetype){
+	
+	if (filetype=="js"){ //if filename is a external JavaScript file
+	        var fileref=document.createElement('script')
+	        fileref.setAttribute("type","text/javascript")
+	        fileref.setAttribute("src", filename)
+	    }
+	    else if (filetype=="css"){ //if filename is an external CSS file
+	        var fileref=document.createElement("link")
+	        fileref.setAttribute("rel", "stylesheet")
+	        fileref.setAttribute("type", "text/css")
+	        fileref.setAttribute("href", filename)
+	    }
+	    if (typeof fileref!="undefined"){
+	    	console.log( 'registrando...');
+	        document.getElementsByTagName("head")[0].appendChild(fileref)
+	    }
+	}
+ 	
+ 	var isOk = document.createElement("trix-toolbar").constructor !== HTMLElement;
+ 	console.log('isOk: '+isOk);
+ 	
+ 	if( !isOk ){
+ 		console.log('criando documento');
+ 		loadjscssfile("./trix/trix.css", "css");
+ 		loadjscssfile("./trix/trix.js", "js");
+ 		loadjscssfile("./trix/attachments.js", "js");
+ 		
+ 	}
+ 	*/
+ 	
+ </script>
+  <!-- -->
  <link rel="stylesheet" type="text/css" href="./trix/trix.css">
  <script type="text/javascript"         src="./trix/trix.js"></script>
  <script type="text/javascript"         src="./trix/attachments.js"></script>
+
 
 <script type="text/javascript" src="js/comoFazer.js"></script>
 <script type="text/javascript" src="js/acao.js"></script>
@@ -70,12 +109,12 @@
 </head>
 <body class="cbp-spmenu-push">
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-30027142-1', 'w3layouts.com');
-  ga('send', 'pageview');
+//  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+//  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+//  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+//  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+//ga('create', 'UA-30027142-1', 'w3layouts.com');
+//  ga('send', 'pageview');
 </script>
 
 </head>
@@ -85,11 +124,11 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 		<div id="page-wrapper">
 			<div class="container-fluid">
 
-				<form id="formulario" action="/comoFazer">
+				<form id="formulario">
 					<div class="form-group">
 						<label>Nome da analise</label> <span class="input-group-btn"><button
 								class="btn btn-default" type="button"
-								onClick="salvaNovoConhecimento();">
+								onClick="salvaAnalise();">
 								<i class="fa fa-save"></i>
 							</button>
 							<button class="btn btn-default" type="button" onClick="novaQuestaoHeader()">
@@ -124,16 +163,18 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<span>titulo</span>
-				<h4 class="modal-title">
-					<input class="form-control" id="nomeHelp">
-				</h4>
 			</div>
 			<div class="modal-body">
+				<div class='help-edicao'>
 				<span>documento</span>
 				<p>
-					<input id="x" type="hidden" name="content" value="">
-					<trix-editor input="x"></trix-editor>
+					<input id="xHelp" type="hidden" name="contentHelp" value="">
+					<trix-editor input="xHelp"></trix-editor>
 				</p>
+				</div>
+				<div class='help-visualizacao'>
+					<p><h1>Conteudo html para nortear o consultor</h1></p>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -175,3 +216,33 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">
+					Escolha a proposta
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<ul>
+	                   <li>Proposta aaaaa</li>
+	                   <li>Proposta bbb</li>
+	                   <li>Proposta ccc</li>
+	                </ul>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>

@@ -15,7 +15,7 @@ public class ComoFazerCmd {
 	public String savaComoFazer(ComoFazer comoFazer) throws Exception{
 		String id = null;
 		JavaWrapper wrapper = new JavaWrapper();
-		id= wrapper.savaComoFazer( comoFazer );
+		id= wrapper.salvaComoFazer( comoFazer );
 		return id;
 	}
 }

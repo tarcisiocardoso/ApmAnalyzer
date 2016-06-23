@@ -1,13 +1,42 @@
 	var objHelp = {}; //variavel para guardar os helpes da analise
+	var objPropostas = {}; //variavel para guardar as propostas da resposta
 	var objAtual= null; //guarda o objecto que esta sendo editado
 	var modoEdicao = false;
 	var isAtributoModeEdicao = false; // entra na edição de um atributo
 	var atributoEdicao; // indica qual atributo esta sendo editado
+	var propostaEdicao; // guarda qual proposta esta sendo editado
 	
-	function listaProposta(me){
-		console.log('>>>>listaProposta<<<');
-		$('#modalProposta').modal('show');
-		
+	function entraModoEdicao(){
+		$("nav").removeClass( "cbp-spmenu-open" );
+		$("body").removeClass( "cbp-spmenu-push-toleft" );
+		//alert('ainda nao implentado');
+		modoEdicao = true;
+	}
+	function propostaEscolhida(me){
+		console.log('>>>propostaEscolhida<<<');
+		console.log(propostaEdicao);
+		console.log( $(me).attr("name") );
+		if($(me).is(':checked')){
+			console.log( 'add');
+			var p = propostaEdicao.parentElement;
+			
+			//$(p).html('<h1>so m teste</h1>');
+			showPropostaAnalise($(me).attr("name"), p);
+			//var p = me.parentElement;
+			//var q = $(objAtual).find("input[name='identificador']");
+			//console.log(q[0].value );
+//			objHelp();//ComoFazer
+		}else{
+			console.log( 'remove');
+			var p = propostaEdicao.parentElement;
+			removeProposta( $(me).attr("name"), p);
+		}
+	}
+	function removeProposta(key, p){
+		console.log( key );
+		console.log(p);
+		console.log( $(p).find(key) );
+		$( p ).find("[name="+key+"]").remove();
 	}
 	function openDado(id, edit){
 		modoEdicao = edit;
@@ -21,6 +50,9 @@
 					montaAnalise( data );
 				});
 		}
+	}
+	function montaObjectPropostas( id, propostas ){
+		objPropostas[id] = propostas;
 	}
 	function montaObjectHelper(id, help){
 		objHelp[id] = help;
@@ -62,18 +94,17 @@
 		if( resposta.help ){
 			montaObjectHelper(resposta.id, resposta.help);
 		}
+		if( resposta.propostas){
+			montaObjectPropostas( resposta.id, resposta.propostas );
+		}
 		return novaResposta(div, resposta);
 	}
 	function novaResposta(me, resposta) {
 		var p = me;
 		if (me.className != 'panel panel-primary'){
 			if (me.nodeName == "DIV"){
-				//if( me.className != 'panel-body') {
-					var cont = $(me).find('div')
-					p = cont[0];
-//				}else{
-//					p = me.parentElement;
-//				}
+				var cont = $(me).find('div')
+				p = cont[0];
 			}else{
 				p = me.parentElement.parentElement.parentElement;
 			}
@@ -90,16 +121,16 @@
 		/* if( nodes.length < 3){
 			div.className='panel-body';
 		} */
-		var idResp, nomeResp, idComoFazer;
+		var idResp, nomeResp, propostas;
 		if( resposta ){
 			idResp = resposta.id;
 			nomeResp = resposta.nome;
+			propostas = resposta.propostas;
 		}else{
-			idResp = "r";
-			nomeResp = "Resposta";
-			idComoFazer = "cf";
+			idResp = "r"+p.childNodes.length;
+			nomeResp = "Resposta_"+p.childNodes.length;
 		}
-
+		
 		var html = '\
                        <input type="checkbox" onchange="changeResposta(this);" value="">\
                        <input type="hidden" name="identificador" value="'+idResp+'" >\
@@ -107,7 +138,7 @@
                        <button class="btn btn-default" type="button" onClick="help(this)"><i class="fa fa-question"></i></button>\
                        <button class="btn btn-default" type="button" onClick="editarOuSalvar(this)"><i class="fa fa-edit"></i></button>\
                        <button class="btn btn-default" type="button" onClick="novaQuestao(this)"><i class="fa fa-plus"></i></button>\
-                       <button class="btn btn-default" type="button" onClick="kb(this, \''+idComoFazer+'\')"><i class="fa fa-life-ring"></i></button>\
+                       <button class="btn btn-default" type="button" onClick="kb( this )"><i class="fa fa-life-ring"></i></button>\
 					   <button class="btn btn-default" type="button" onClick="removeElementoResposta(this)"><i class="fa fa-times" aria-hidden="true"></i></button>\
 					   <i class="fa fa-edit pull-right" onClick="edicaoAtributo(this);"></i>\
 		    	';
@@ -118,14 +149,23 @@
 			var btn = $(div).find('button');
 			$(btn[1]).hide();
 			$(btn[2]).hide();
-			if( idComoFazer == null ){
+			if( propostas ){
 				$(btn[3]).hide();
+				var i=0;
+				for(i=0; i< propostas.length; i++){
+					showPropostaAnalise(propostas[i], div);	
+				}
 			}
 			$(btn[4]).hide();
 		}else{
-			var i = $(div).find('i:last');
-			i.hide();
-			console.log(i);
+			if( propostas ){
+				var i = $(div).find('i:last');
+				i.hide();
+				var i=0;
+				for(i=0; i< propostas.length; i++){
+					showPropostaAnalise(propostas[i], div);	
+				}
+			}
 		}
 		if( isAtributoModeEdicao ){
 			habilitaSalvaGeral()
@@ -136,7 +176,6 @@
 		console.log(">>>habilitaSalvaGeral<<<");
 		$(formulario).show();
 	}
-
 	
 	function salvaAnalise(){
 		var root = document.getElementById("panelPrincipal");
@@ -151,21 +190,8 @@
 		json["questoes"] = qs;
 		
 		var data =  JSON.stringify(json) ;
-		console.log(data);
-		/*
-		$.post( "/analise",  data )
-		.done(function( json ) {
-			console.log(json);
-			if( json.sucesso ){
-				$('#myModal .modal-title').html("Sucesso!");
-			}else{
-				$('#myModal .modal-title').html("Problema!");
-			}
-			$('#myModal .modal-body').html( json.dado);
-			$('#myModal').modal('show')
-		  });
-		  */
 		
+		console.log(data);
 
 		$.ajax({
 		  url:'/analise',
@@ -199,6 +225,7 @@
 				item["id"] = id[0].value;
 				item['help'] = getHelpById(id[0].value);
 				item["respostas"] = montaRespostas(no);
+				console.log( item );
 				questao.push( item );
 			}
 		}
@@ -207,9 +234,14 @@
 	function montaRespostas(panel){
 		var resposta = [];
 		//panel = panel.childNodes[2];
+		
 		var nodes = panel.childNodes;
 		for (var i = 0; i < nodes.length; i++) {
 			if( nodes[i].nodeName == "DIV"){
+			
+				if( nodes[i].className == 'panel-heading'){
+					continue;
+				}
 				var item = {};
 				var no = nodes[i];
 				var q = $(no).find("span:first");
@@ -217,6 +249,7 @@
 				item["nome"] = q[0].innerHTML;
 				item["id"] = id[0].value;
 				item['help'] = getHelpById(id[0].value);
+				item['propostas'] = getPropostasDaRespota(no);
 				
 				var root = $(no).find('.panel-body');
 				root = root[0];
@@ -229,6 +262,18 @@
 			}
 		}
 		return resposta;
+	}
+	function getPropostasDaRespota(no){
+		var propostas = $(no).find(".panel-proposta");
+		var item = [];
+		$.each(propostas, function(index, pro){
+			console.log(pro);
+			item.push( $(pro).attr('name') );
+		} );
+		
+		if( item.length == 0 )return null;
+		
+		return item;
 	}
 	function removeElementoResposta(me){
 		var p = me.parentElement;
@@ -279,39 +324,54 @@
 
 		p.innerHTML = html;
 	}
-	function kb(me, key) {
-		
-		var p = me.parentElement;
-		var cn = p.lastChild.className
-		if (cn == 'panel-body') {
-			console.log('remover...');
-			p.removeChild(p.lastChild);
-		} else {
-
-			var div = document.createElement('div');
-			div.className = 'panel-body';
-
-//			var html = '\
-//				<div class="panel panel-primary">\
-//					<button class="btn btn-default" type="button" onClick="help(this)"><i class="fa fa-edit"></i></button>\
-//	             	<button class="btn btn-default" type="button" onClick="listaProposta(this)"><i class="fa fa-search" aria-hidden="true"></i></button>\
-//	             	<button class="btn btn-default" type="button" onClick="help(this)"><i class="fa fa-plus"></i></button>\
-//	                 <h1>Para solucionar esse problema deve fazer os seguintes pontos</h1>\
-//	                 <ul>\
-//	                   <li>pontos aaaaa</li>\
-//	                   <li>pontos bbb</li>\
-//	                   <li>pontos ccc</li>\
-//	                 </ul>\
-//	            </div>\
-//		    	';
-//			div.innerHTML = html;
+	function kb(me) {
+		if( modoEdicao || isAtributoModeEdicao ){
+			$('#myModal').modal('show');
+			propostaEdicao = me; 
+			var p = propostaEdicao.parentElement;
+			var propostas = $(p).find('.panel-proposta');
 			
-			$.get( "./como_fazer/"+key+"/index.html", function( data ) {
-				  $( div ).html( data );
-				});
+			listaPropostaAnalise(propostas);
 			
-			p.appendChild(div);
+			return;
 		}
+		var p = me.parentElement;
+		var cn = $(p).find('.panel-body');//.lastChild.className
+		console.log( cn.length );
+		if (cn.length > 0) {
+			if( $(cn).is(':visible') ){
+			//	p.removeChild(p.lastChild);
+				cn.hide();
+			}else{
+				cn.show();
+			}
+		} else if (cn.length == 0) {
+			showOrHideOrCreateProposta(me);
+			//var p = me.parentElement;
+//			var q = $(p).find("input[name='identificador']");
+//			var id = q[0].value;
+//			console.log(id);
+//			var propostas = buscaPropostasById(id);
+//			var div = document.createElement('div');
+//			div.className = 'panel-body';
+//
+//			var i=0;
+//			for(i=0; i< propostas.length; i++){
+//				showPropostaAnalise(propostas[i], div);	
+//			}
+//
+//			p.appendChild(div);
+		} else{
+			console.log('...show...');
+		}
+	}
+	function buscaPropostasById(id){
+		for (p in objPropostas) {
+			if( p == id ){
+				return objPropostas[p];
+			}
+		} 
+		return null;
 	}
 	function getHelpById(id){
 		for (p in objHelp) {
@@ -326,29 +386,45 @@
 		var q = $(objAtual).find("input[name='identificador']");
 		
 		var help = {
-			'nomeHelp': $('#nomeHelp')[0].value,
-			'doc': $('#x')[0].value
+			//'nomeHelp': $('#nomeHelp')[0].value,
+			'doc': $('#xHelp')[0].value
 		};
-		
 		objHelp[q[0].value] = help;
-		
 	}
 	function help(me) {
 		var p = me.parentElement;
 		objAtual = p;
-		
 		var q = $(objAtual).find("input[name='identificador']");
 		var h = getHelpById(q[0].value);
-		if( h ){
-			$('#nomeHelp')[0].value = h.nomeHelp;
-			var element = document.querySelector("trix-editor");
-			element.editor.setSelectedRange([0, $('#x')[0].value.length ]);
-			element.editor.insertHTML(h.doc);
+		
+		if( modoEdicao || isAtributoModeEdicao){
+			$('.help-edicao').show();
+			$('.help-visualizacao').hide();
+			
+			if( h ){
+				$('.help-titulo').html( h.nomeHelp );
+				//$('#nomeHelp')[0].value = h.nomeHelp;
+				var element = document.querySelector("trix-editor");
+				console.log( $('#xHelp') );
+				console.log( element );
+				element.editor.setSelectedRange([0, $('#xHelp')[0].value.length ]);
+				element.editor.insertHTML(h.doc);
+			}else{
+				//$('#nomeHelp')[0].value = "";
+				var element = document.querySelector("trix-editor");
+				element.editor.setSelectedRange([0, $('#xHelp')[0].value.length ]);
+				element.editor.insertHTML("");
+			}
 		}else{
-			$('#nomeHelp')[0].value = "";
-			var element = document.querySelector("trix-editor");
-			element.editor.setSelectedRange([0, $('#x')[0].value.length ]);
-			element.editor.insertHTML("");
+			$('.help-edicao').hide();
+			$('.help-visualizacao').show();
+			
+			if( h ){
+				$('.help-titulo').html( h.nomeHelp );
+				$('.help-visualizacao').html(h.doc);
+			}else{
+				$('.help-visualizacao').html("");
+			}
 		}
 		$('#modalHelp').modal('show')
 	}
@@ -548,7 +624,7 @@ function maisQuestoes(me){
 function openListaAnalise(){
 	$("nav").removeClass( "cbp-spmenu-open" );
 	$("body").removeClass( "cbp-spmenu-push-toleft" );
-	
+	modoEdicao = false;
 	$.get( "app/analise/index.html", function( data ) {
 		  $( "body" ).html( data );
 		  
@@ -577,25 +653,44 @@ function showAnalise(id, nome){
 	console.log(url);
 	$.get( url, function( data ) {
 		  $( "#analiseContainer" ).html( data );		  
-		  openDado(id);
+		  openDado(id, modoEdicao);
 	});
 }
 
 function changeResposta(me){
 	var p = me.parentElement;
-	
+	if( modoEdicao || isAtributoModeEdicao ){
+		return;
+	}
 	console.log(p);
 	if( !modoEdicao ){
-		var cont = $(p).find('div:first');
+		var cont = $(p).find('.panel-body');
 		console.log( cont );
 		if(me.checked ){
+			if( cont.length == 0 ){
+				var q = $(p).find("input[name='identificador']");
+				var id = q[0].value;
+				console.log(id);
+				var propostas = buscaPropostasById(id);
+				console.log(propostas);
+	
+				var div = document.createElement('div');
+				div.className = 'panel-body';
+	
+				var i=0;
+				for(i=0; i< propostas.length; i++){
+					showPropostaAnalise(propostas[i], div);	
+				}
+				$(p).append(div);
+			}
 			cont.show();
 		}else{
 			cont.hide();
 		}
 	}
 	
-	return
+	return;
+	
 	if(me.checked ){
 		var div = document.createElement('div');
 
@@ -631,16 +726,50 @@ function changeResposta(me){
 		p.removeChild(p.lastChild);
 	}
 }
+function showOrHideOrCreateProposta(me){
+	var p = me.parentElement;
+	var cont = $(p).find('.panel-body');
+	console.log('cont.length: '+ cont.length );
+	if( cont.length == 0 ){
+		if( !propostas ) return;
+		//----------------
+		var q = $(p).find("input[name='identificador']");
+		var id = q[0].value;
+		console.log(id);
+		var propostas = buscaPropostasById(id);
+		console.log(propostas);
 
+		var div = document.createElement('div');
+		div.className = 'panel-body';
+
+		
+		var i=0;
+		for(i=0; i< propostas.length; i++){
+			showPropostaAnalise(propostas[i], div);	
+		}
+		$(p).append( div );
+		//----------------
+	}else{
+		if( !isAtributoModeEdicao){
+			cont.hide();
+		}else{
+			cont.show();
+		}
+		
+	}
+}
 function edicaoAtributo(me){
 	console.log(me);
 	if( isAtributoModeEdicao == false){
 		var p = me.parentElement;
-		console.log(p);
-		p = $(p).find("button");
-		$(p).show();
+		
+		var btns = $(p).find("button");
+		$(btns).show();
 		atributoEdicao = me;
 		isAtributoModeEdicao = true;
+		//-----------
+		showOrHideOrCreateProposta(me);
+		//-----------
 	}else{
 		var p = me.parentElement;
 		console.log(p);
@@ -651,6 +780,9 @@ function edicaoAtributo(me){
 
 		isAtributoModeEdicao = false;
 		atributoEdicao = null;
+		//-----------
+		showOrHideOrCreateProposta(me);
+		//-----------		
 		
 	}
 //	if( isAtributoModeEdicao == false){

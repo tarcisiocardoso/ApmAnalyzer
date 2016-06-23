@@ -35,6 +35,7 @@ public class JavaWrapper {
 	private static final String PATH = "src/main/resources/static/web/";
 	private static final String PATH_ACAO = PATH + "/acao";
 	private static final String PATH_COMO_FAZER = PATH + "/como_fazer";
+	private static final String PATH_PROPOSTA = PATH + "/proposta";
 	private static final String PATH_ANALISE = PATH + "/analise";
 
 	public Collection<ComoFazer> getAllComoFazer() {
@@ -60,6 +61,18 @@ public class JavaWrapper {
 		}
 
 		return list;
+	}
+	public String getAllAcaoAsJson() {
+		String json = "{}";
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			json = mapper.writeValueAsString(getAllAcoes());
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return json;
 	}
 	public Collection<Acao> getAllAcoes() {
 		String base = "acao";
@@ -216,7 +229,31 @@ public class JavaWrapper {
 		
 		return id;
 	}	
-	public String savaComoFazer(ComoFazer comoFazer) throws Exception {
+	public String salvaProposta(Proposta proposta) throws Exception {
+		if( proposta.nome == null || proposta.nome.trim().length() == 0){
+			throw new Exception("Nome obrigatório");
+		}
+		proposta.id = formatId(proposta.id, proposta.nome);
+		
+		File file = new File(PATH_PROPOSTA + "/" + proposta.id);
+		try {
+			if (file.isDirectory()) { // ja existe. Atualiza
+				saveFile(file.getCanonicalPath(), proposta.conteudo);
+			} else {
+				addInit(PATH_PROPOSTA, proposta.id, proposta.nome);
+				// file.mkdir();
+				Path path = Paths.get(file.getCanonicalPath());
+				Files.createDirectories(path);
+
+				saveFile(file.getCanonicalPath(), proposta.conteudo);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return proposta.id;
+	}
+	public String salvaComoFazer(ComoFazer comoFazer) throws Exception {
 		if( comoFazer.nome == null || comoFazer.nome.trim().length() == 0){
 			throw new Exception("Nome obrigatório");
 		}
@@ -413,8 +450,12 @@ public class JavaWrapper {
 			if( resposta.help != null ){
 				saveFile(file.getCanonicalPath(), resposta.help.doc, "help.html");
 			}
-			if( resposta.idComoFazer != null ){
-				saveFile(file.getCanonicalPath(), resposta.idComoFazer, "comoFazer.txt");
+			if( resposta.propostas != null ){
+				String dados = "";
+				for (String proposta : resposta.propostas) {
+					dados += proposta+"\n";
+				}
+				saveFile(file.getCanonicalPath(), dados, "propostas.txt");
 			}
 			if( resposta.questoes != null ){
 				for (Questao questao: resposta.questoes ) {
@@ -436,7 +477,7 @@ public class JavaWrapper {
 				r.id = f.getName();
 				r.nome = hm.getProperty( r.id );
 				r.help = getHelpFromFile( path+"/"+r.id);
-				r.idComoFazer = getComoFazerFromFile(path+"/"+r.id);
+				r.propostas = getPropostaFromFile(path+"/"+r.id);
 				if( r.help != null ) r.help.nomeHelp = r.nome;
 				r.questoes = recuperaQuestoesDoArquivo(f, path );
 				lst.add(r);
@@ -444,10 +485,10 @@ public class JavaWrapper {
 		}
 		return lst;
 	}
-	private String getComoFazerFromFile(String path) {
-		File file = new File(PATH+"/"+path+ "/comoFazer.txt");
+	private String[] getPropostaFromFile(String path) {
+		File file = new File(PATH+"/"+path+ "/propostas.txt");
 		if( !file.exists() ) return null;
-		String conteudo = "";
+		ArrayList<String> conteudo = new ArrayList<String>();
 		BufferedReader br = null;
 		try {
 			FileReader arq = new FileReader(file);
@@ -455,7 +496,7 @@ public class JavaWrapper {
 
 			String linha = "";
 			while ((linha = br.readLine()) != null) {
-				conteudo += linha;
+				conteudo.add(linha);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -466,7 +507,7 @@ public class JavaWrapper {
 				} catch (IOException e) {
 				}
 		}
-		return conteudo;
+		return conteudo.toArray(new String[0]);
 	}
 	public List<Questao> recuperaQuestoesDoArquivo(File file, String id) throws Exception{
 		List<Questao> lst = new ArrayList<>();

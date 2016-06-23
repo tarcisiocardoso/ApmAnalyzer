@@ -126,7 +126,7 @@ function salvaAcao(){
 		limpaConteudo();
 		html = p.html().trim();
 	}else{
-		console.log('nao implementado...');
+		console.log('nao implementado...xxxx');
 		html = myCodeMirror.getValue();
 	}
 	$.post( "/acao",  {idAcao:idAcao, nomeAcao:nomeAcao, conteudo:html} )

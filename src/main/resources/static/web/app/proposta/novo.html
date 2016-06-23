@@ -1,0 +1,43 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="trix/trix.css">
+  <script type="text/javascript" src="trix/trix.js"></script>
+  <script type="text/javascript" src="trix/attachments.js"></script>
+</head>
+<body>
+	<h1>Proposta de medida</h1>
+	
+	<form id="formulario" action="/comoFazer">
+	  <div class="form-group">
+          <label>Nova proposta de medida</label>
+          <input class="form-control" name="nome">
+      </div>
+	  <input id="identificador" type="hidden" name="identificador">
+	  
+	  <input id="x" type="hidden" name="content">
+	  <trix-editor input="x"></trix-editor>
+	  
+	  <span class="input-group-btn"><button class="btn btn-default" type="button" onClick="salvaNovaProposta();"><i class="fa fa-save"> Incluir</i></button></span>
+	</form>
+</body>
+</html>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Sucesso</h4>
+      </div>
+      <div class="modal-body">
+        <p><h1>Proposta salva com sucesso</h1></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" onClick="openListaProposta();">Voltar para lista de proposta</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	

@@ -1,7 +1,11 @@
 <html>
 <head>
-  
-  <script type="text/javascript" src="js/analise.js"></script>
+<!-- 
+ <link rel="stylesheet" type="text/css" href="./trix/trix.css">
+ <script type="text/javascript"         src="./trix/trix.js"></script>  
+ <script type="text/javascript"         src="./trix/attachments.js"></script>
+  -->  
+ <script type="text/javascript"         src="js/analise.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -47,16 +51,18 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<span>titulo</span>
-				<h4 class="modal-title">
-					<input class="form-control" id="nomeHelp">
-				</h4>
 			</div>
 			<div class="modal-body">
+				<div class='help-edicao'>
 				<span>documento</span>
 				<p>
 					<input id="xHelp" type="hidden" name="contentHelp" value="">
 					<trix-editor input="xHelp"></trix-editor>
 				</p>
+				</div>
+				<div class='help-visualizacao'>
+					<p><h1>Conteudo html para nortear o consultor</h1></p>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
