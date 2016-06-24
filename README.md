@@ -9,7 +9,7 @@ Sistema auxiliador de analise APM
 <ul>
 	<li>JDK ultima versão</li>
 	<li>STS - Spring Tool Suite</li>
-</u>
+</ul>
 
 No eclipse STS, importe o projeto clonado do git
 
