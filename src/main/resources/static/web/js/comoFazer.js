@@ -43,7 +43,7 @@ function montaListaComoFazer(){
 function showComoFazer(id, nome){
 	$( "#tituloPagina" ).html( "<h3><a href='index.html' onClick=\"openListaComoFazer(); return false;\">"+nome+"</a></h3>" );
 	
-	var url = "./como_fazer/"+id+"/index.html";
+	var url = "./base/como_fazer/"+id+"/index.html";
 	console.log(url);
 	$.get( url, function( data ) {
 		  $( "#comoFazerContainer" ).html( data );		  

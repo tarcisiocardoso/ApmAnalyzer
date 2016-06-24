@@ -92,7 +92,7 @@ function openListaProposta(){
 	});
 }
 function showPropostaAnalise(id, component){
-	var url = "./proposta/"+id+"/index.html";
+	var url = "./base/proposta/"+id+"/index.html";
 	
 	$.get( url, function( data ) {
 		var div = document.createElement('div');
@@ -104,7 +104,7 @@ function showPropostaAnalise(id, component){
 	});
 }
 function showProposta(id){
-	var url = "./proposta/"+id+"/index.html";
+	var url = "./base/proposta/"+id+"/index.html";
 	
 	$.get( url, function( data ) {
 		  $( "#propostaContainer" ).html( data );		  

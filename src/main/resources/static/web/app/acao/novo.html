@@ -1,0 +1,157 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="trix/trix.css">
+  <script type="text/javascript" src="trix/trix.js"></script>
+  <script type="text/javascript" src="trix/attachments.js"></script>
+  
+  <script src="lib/codemirror.js"></script>
+  <link rel="stylesheet" href="lib/codemirror.css">
+
+  <script src="lib/mode/xml/xml.js"></script>
+  <script src="lib/mode/htmlmixed/htmlmixed.js"></script>
+  
+</head>
+<body>
+	<div>
+		<div>
+			<div class="container-fluid">
+
+				<div class="form-group">
+					<label>Nome da Acao</label> 
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button" onClick="salvaAcao();"><i class="fa fa-save"></i></button>
+							<button class="btn btn-default" type="button" onClick="modoEdicaoHTML();"><i class="fa fa-html5"> Editar HTML</i></button>
+							<button class="btn btn-default pull-right" type="button" onClick="location.reload();"><i class="fa fa-home"></i></button>
+						</span> 
+						<input class="form-control" name="nomeAcao" id="nomeAcao">
+				</div>
+
+				<div class="row">
+					<div class="col-lg-12" id="panelPrincipal">
+					
+					  <div class="form-group">
+				          <label>Novo item:</label>
+				          <input class="form-control" id="nomeItem">
+				      </div>
+					  <input id="identificador" type="hidden" name="identificador">
+					  
+					  <input id="x" type="hidden" name="content">
+					  <trix-editor input="x"></trix-editor>
+					  
+					  <span class="input-group-btn"><button class="btn btn-default" type="button" onClick="addNovoItem();"><i class="fa fa-plus"> Add</i></button></span>
+					
+					<div id="wrapper">
+						<div id="page-wrapper">
+						  <div class="container-fluid">
+					           <div class="row">
+					                <div class="col-lg-12">
+					                    
+					                </div>
+					           </div>
+						  </div>
+						</div>
+					</div> <!-- fim wrapper -->
+					
+					</div> <!-- fim panelPrincipal -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
+
+<script>
+	openDado(null, true);
+</script>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modalHelp">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<span>titulo</span>
+				<h4 class="modal-title">
+					<input class="form-control" id="nomeHelp">
+				</h4>
+			</div>
+			<div class="modal-body">
+				<span>documento</span>
+				<p>
+					<input id="xHelp" type="hidden" name="contentHelp" value="">
+					<trix-editor input="xHelp"></trix-editor>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" onClick="salvaHelp()")>Save</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">
+					Escolha a proposta
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<ul>
+	                   <li>Proposta aaaaa</li>
+	                   <li>Proposta bbb</li>
+	                   <li>Proposta ccc</li>
+	                 </ul>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modalProposta">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">
+					Escolha a proposta
+				</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<ul>
+	                   <li>Proposta aaaaa</li>
+	                   <li>Proposta bbb</li>
+	                   <li>Proposta ccc</li>
+	                 </ul>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

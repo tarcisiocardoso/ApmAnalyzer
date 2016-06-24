@@ -247,7 +247,7 @@ function montaListaAcao(){
 }
 
 function showAcao(id, nomeAcao){
-	var url = "./acao/"+id+"/index.html";
+	var url = "./base/acao/"+id+"/index.html";
 	if( isAcaoEditModel ){
 		novaAcao(id);
 	}else{

@@ -1,0 +1,126 @@
+
+			<div class="header-section">
+				<!-- banner -->
+				<div class="banner about-banner">
+					<div class="container">
+						<div class="header">
+							<div class="top-nav">
+									<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s2">
+										<h2>Sidebar</h2>
+										<ul>
+											<li><a href="index.html">Home</a></li>
+											<li><a class="active" href="#" onClick="novaAcao(); return false;">Nova ação</a></li>
+											<li><a href="#" onClick="moduloEdicao(); return false;">Editar</a></li>
+											<li><a href="#" onClick="moduloExclusao(); return false;">Excluir</a></li>
+											<li><a href="blog.html">Blog</a></li>
+											<li><a href="contact.html">Contact</a></li>
+										</ul>
+
+									</nav>
+									<div class="main buttonset">	
+											<!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
+											<button id="showRightPush"><img src="images/menu.png" alt=""/></button>
+											<!--<span class="menu"></span>-->
+									</div>
+									<!-- Classie - class helper functions by @desandro https://github.com/desandro/classie -->
+									<script src="js/classie.js"></script>
+									<script>
+										var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+										showRightPush = document.getElementById( 'showRightPush' ),
+										body = document.body;
+
+										showRightPush.onclick = function() {
+											classie.toggle( this, 'active' );
+											classie.toggle( body, 'cbp-spmenu-push-toleft' );
+											classie.toggle( menuRight, 'cbp-spmenu-open' );
+											disableOther( 'showRightPush' );
+										};
+
+										function disableOther( button ) {
+											if( button !== 'showRightPush' ) {
+												classie.toggle( showRightPush, 'disabled' );
+											}
+										}
+									 </script>
+							</div>
+							<div class="logo wow fadeInDown animated" data-wow-delay=".0s">
+								<h1><a href="#" onClick="atualizaTela(); return false;"id='nomeAcao'>execução</a></h1>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					</div>
+				</div>
+				<!-- //banner -->
+				
+				<!-- about -->
+				<div class="about">
+					<input type="hidden" name="idAcao" id="idAcaoAtual">
+					<div class="about-heading" id='acaoContainer'>
+						<div class="container">
+							<div class="about-heading-info wow fadeInDown animated" data-wow-delay=".0s" id='idAcao'>
+								
+							</div>
+							<div class="about-heading-bottom">
+								
+								<div class="col-md-8 about-heading-right wow fadeInRight animated" data-wow-delay=".0s">
+									<h4>Atividades rotineiras que segue um processo de execução bem especifico e definido pela equipe</h4>
+									<p>
+									Indicar aqui o fluxo de criação e definição do processo para ser executado pela equipe.									
+									Uma atividade de execução deve:
+									<ul>
+										<li>Criar um documento no google driver que dê sustentação ao oque deve ser feito, tendo como base a visão APM e o que de valor será dado a equipe.</li>
+										<li>Montar um dojo com a equipe para harmonizar a atividade e disseminar o conhecimento, bem como validar e evoluir a proposta </li>
+										<li>Criar a solução na aplicação que seja uma forma pratica do como proceder já descrito no documento no google driver. Lembrando que essa solução deveria ser completa sem a necessidade da tutoria, porem sem perder a ideia do coating</li>
+									</ul>
+									</p>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //about -->
+				<!-- footer -->
+				<div class="footer">
+					<div class="container">
+						
+						<div class="footer-bottom">
+							<div class="footer-bottom-grids">
+								<div class="footer-bottom-left wow fadeInLeft animated" data-wow-delay=".0s">
+									<p>© 2016 XysAnalyzer . All Rights Reserved . Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+								</div>
+								<div class="footer-bottom-right icons wow fadeInRight animated" data-wow-delay=".0s">
+									<ul>
+										<li><a href="#" class="twitter"></a></li>
+										<li><a href="#" class="twitter facebook"></a></li>
+										<li><a href="#" class="twitter chrome"></a></li>
+										<li><a href="#" class="twitter dribbble"></a></li>
+									</ul>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //footer -->
+ 			</div>
+		
+		
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modulo de edição</h4>
+      </div>
+      <div class="modal-body">
+        <p><h1>Escolha um conteudo para edição</h1></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+		

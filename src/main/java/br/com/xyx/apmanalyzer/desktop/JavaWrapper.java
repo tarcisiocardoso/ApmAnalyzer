@@ -32,12 +32,13 @@ import br.com.xyx.apmanalyzer.server.controller.proposta.Proposta;
 
 public class JavaWrapper {
 
-	private static final String PATH = "src/main/resources/static/web/";
-	private static final String PATH_ACAO = PATH + "/acao";
-	private static final String PATH_COMO_FAZER = PATH + "/como_fazer";
-	private static final String PATH_PROPOSTA = PATH + "/proposta";
-	private static final String PATH_ANALISE = PATH + "/analise";
-
+	//private static final String PATH = "src/main/resources/static/web/";
+	public static String PATH = "static/web/base/";
+	public static String PATH_ACAO = PATH + "/acao";
+	public static String PATH_COMO_FAZER = PATH + "/como_fazer";
+	public static String PATH_PROPOSTA = PATH + "/proposta";
+	public static String PATH_ANALISE = PATH + "/analise";
+	
 	public Collection<ComoFazer> getAllComoFazer() {
 		String base = "como_fazer";
 		File file = new File(PATH + base);
@@ -162,6 +163,10 @@ public class JavaWrapper {
 		BufferedReader br = null;
 		HashMap<String, String> hm = new HashMap<>();
 		try {
+			if( !file.isFile() ){
+				System.out.println( file.getAbsolutePath() );
+				file.createNewFile();
+			}
 			pro.load( new FileInputStream(file) );
 			
 //			FileReader arq = new FileReader(file);

@@ -5,12 +5,12 @@ target/
 /upload-dir
 upload-dir/
 src/main/resources/static/web/upload/
-src/main/resources/static/web/acao/
-src/main/resources/static/web/analise/
-src/main/resources/static/web/app/acao/
-src/main/resources/static/web/como_fazer/
-src/main/resources/static/web/app/howto/
-src/main/resources/static/web/proposta/
+src/main/resources/static/web/base/acao/
+src/main/resources/static/web/base/analise/
+src/main/resources/static/web/base/acao/
+src/main/resources/static/web/base/como_fazer/
+src/main/resources/static/web/base/howto/
+src/main/resources/static/web/base/proposta/
 
 # Eclipse artifacts, including WTP generated manifests
 .classpath

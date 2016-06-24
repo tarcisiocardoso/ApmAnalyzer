@@ -32,7 +32,7 @@ public class Console {
 		Long tempo = System.currentTimeMillis();
 		for(int i=0; i< 1000; i++){
 			JavaWrapperTest jwt = new JavaWrapperTest();
-			jwt.testBuscaAnaliseDisco();
+			//jwt.testBuscaAnaliseDisco();
 		}
 		
 		System.out.println("["+(System.currentTimeMillis() - tempo )+"]");

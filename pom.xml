@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>br.com.xyx.apmanalyzer</groupId>
+	<artifactId>XysAnalyzer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -21,6 +21,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		
+		<!-- The main class to start by executing java -jar -->
+	    <start-class>br.com.xyx.apmanalyzer.server.ApmAnalyzerApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -38,13 +41,15 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
-	
+	 
 	<build>
 		<plugins>
 			<plugin>
@@ -53,6 +58,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+	 
 
 </project>
