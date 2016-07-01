@@ -1,3 +1,4 @@
+	var idAnalise = null; //guarda a analise atual
 	var objHelp = {}; //variavel para guardar os helpes da analise
 	var objPropostas = {}; //variavel para guardar as propostas da resposta
 	var objAtual= null; //guarda o objecto que esta sendo editado
@@ -6,6 +7,18 @@
 	var atributoEdicao; // indica qual atributo esta sendo editado
 	var propostaEdicao; // guarda qual proposta esta sendo editado
 	
+	function infoAnalise(){
+		console.log('>>>infoAnalise<<<-->'+idAnalise);
+		
+		$.get( "base/analise/"+idAnalise+"/index.html", function( data ) {
+			$('#myModal .modal-title').html("Objecito da analise");
+			$('#myModal .modal-body').html( data );
+			$('#myModal').modal('show')
+		});
+	}
+	function descricaoAnalise(){
+		alert('ainda nao implementado');
+	}
 	function entraModoEdicao(){
 		$("nav").removeClass( "cbp-spmenu-open" );
 		$("body").removeClass( "cbp-spmenu-push-toleft" );
@@ -44,6 +57,7 @@
 			$(formulario).hide();
 		}
 		if( id ){
+			idAnalise = id;
 			$.ajax({
 				  url: "/analise/"+id
 				}).done(function(data) {
@@ -426,7 +440,7 @@
 				$('.help-visualizacao').html("");
 			}
 		}
-		$('#modalHelp').modal('show')
+		$('#modalHelp').modal('show');
 	}
 	
 	function novaQuestaoHeader( questao ) {
@@ -646,7 +660,7 @@ function montaListaAnalise(){
 }
 
 function showAnalise(id, nome){
-	$( "#tituloPagina" ).html( "<h3><a href='#' onClick=\"openListaAnalise(); return false;\">"+nome+"</a></h3>" );
+	$( "#tituloPagina" ).html( "<h3><a href='#' onClick=\"infoAnalise(); return false;\">"+nome+"</a></h3>" );
 	
 	var url = "./app/analise/analise.html";
 	//var url = "/analise/"+id;

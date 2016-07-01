@@ -1,12 +1,13 @@
 <html>
 <head>
+<!-- 
   <link rel="stylesheet" type="text/css" href="trix/trix.css">
   <script type="text/javascript" src="trix/trix.js"></script>
   <script type="text/javascript" src="trix/attachments.js"></script>
-  
+ -->
+   
   <script src="lib/codemirror.js"></script>
   <link rel="stylesheet" href="lib/codemirror.css">
-
   <script src="lib/mode/xml/xml.js"></script>
   <script src="lib/mode/htmlmixed/htmlmixed.js"></script>
   
@@ -17,10 +18,11 @@
 			<div class="container-fluid">
 
 				<div class="form-group">
-					<label>Nome da Acao</label> 
+					<label>Nome da Acao xxxxx</label> 
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="button" onClick="salvaAcao();"><i class="fa fa-save"></i></button>
 							<button class="btn btn-default" type="button" onClick="modoEdicaoHTML();"><i class="fa fa-html5"> Editar HTML</i></button>
+							<button class="btn btn-default" type="button" onClick="cadastrarRef();"><i class="fa fa-link"> Referencias</i></button>
 							<button class="btn btn-default pull-right" type="button" onClick="location.reload();"><i class="fa fa-home"></i></button>
 						</span> 
 						<input class="form-control" name="nomeAcao" id="nomeAcao">
@@ -117,7 +119,7 @@
 				</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->

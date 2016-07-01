@@ -14,14 +14,18 @@
 
 				<form id="formulario" >
 					<div class="form-group">
-						<label>Nome da analise</label> <span class="input-group-btn"><button
-								class="btn btn-default" type="button"
-								onClick="salvaAnalise();">
-								<i class="fa fa-save"></i>
-							</button>
-							<button class="btn btn-default" type="button" onClick="novaQuestaoHeader()">
-								<i class="fa fa-plus"></i>
-							</button> </span> 
+						<label>Nome da analise</label> 
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onClick="salvaAnalise();">
+									<i class="fa fa-save"></i>
+								</button>
+								<button class="btn btn-default" type="button" onClick="novaQuestaoHeader()">
+									<i class="fa fa-plus"></i>
+								</button>
+								<button class="btn btn-default pull-right " type="button" onClick="descricaoAnalise()">
+									<i class="fa fa-question"></i>
+								</button>  
+							</span> 
 							<input type="hidden" name="idAnalise" id="idAnalise">
 							<input class="form-control" name="nomeAnalise" id="nomeAnalise">
 					</div>

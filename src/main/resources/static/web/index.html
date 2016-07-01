@@ -35,7 +35,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
  -->
 <!-- //font -->
-
+<script type="text/javascript" src="js/path.js"></script>
 <script type="text/javascript" src="js/comoFazer.js"></script>
 <script type="text/javascript" src="js/acao.js"></script>
 <script type="text/javascript" src="js/proposta.js"></script>
@@ -89,7 +89,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s2">
 										<h2>Sidebar</h2>
 										<ul>
-											<li><a href="#" onClick="openListaAcao(); return false;">Execução</a></li>
+											<li><a href="#/listaAcao" onClick="/*openListaAcao(); return true;*/">Execução</a></li>
 											<li><a href="#" onClick="openListaAnalise(); return false;">Analise</a></li>
 											<li><a href="#" onClick="openListaProposta(); return false;">Proposta</a></li>
 											<li><a href="#" onClick="openListaComoFazer(); return false;">Como Fazer</a></li>
@@ -160,19 +160,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<ul class="rslides" id="slider3">
 										<li>
 											<div class="banner-info-right-info wow fadeInRight animated" data-wow-delay=".0s">
-												<h3>Analisar problemas ocorrido no sistema XPTO</h3>
+												<h1>Analisar problemas ocorrido no sistema XPTO</h1>
 												<p>Ullamcorper etiam mauris ex, accumsan eu odio at, hendrerit arcu. Fusce pretium, sapien faucibus fermentum vehicula, ligula odio viverra leo, eu commodo tellus tellus id elit. Ut urna nisi, congue quis vulputate eu, molestie at nisl. Nullam et sem sit amet magna hendrerit vulputate. </p>
 											</div>
 										</li>
 										<li>
 											<div class="banner-info-right-info wow fadeInRight animated" data-wow-delay=".0s">
-												<h3>Maquina xyz parrou de responder</h3>
+												<h1>Maquina xyz parou de responder</h1>
 												<p>hendrerit etiam mauris ex, accumsan eu odio at, ullamcorper arcu. Fusce pretium, sapien faucibus fermentum vehicula, ligula odio viverra leo, eu commodo tellus tellus id elit. Ut urna nisi, congue quis vulputate eu, molestie at nisl. Nullam et sem sit amet magna hendrerit vulputate. </p>
 											</div>
 										</li>
 										<li>
 											<div class="banner-info-right-info wow fadeInRight animated" data-wow-delay=".0s">
-												<h3>Ocorreu<span>e isso</span></h3>
+												<h1>Ultimos problemas</h1>
 												<p>Accumsan etiam mauris ex, eu odio at, ullamcorper hendrerit arcu. Fusce pretium, sapien faucibus fermentum vehicula, ligula odio viverra leo, eu commodo tellus tellus id elit. Ut urna nisi, congue quis vulputate eu, molestie at nisl. Nullam et sem sit amet magna vulputate hendrerit. </p>
 											</div>
 										</li>
@@ -199,3 +199,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!--//smooth-scrolling-of-move-up-->
 </body>	
 </html>
+<script>
+Path.listen();
+</script>

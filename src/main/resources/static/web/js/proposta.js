@@ -1,4 +1,31 @@
+
 var isPropostaDeleteModel = false;
+var isPropostaEditModel = false;
+var idProspostaAtual = null;
+
+function editaProposta(){
+	$("nav").removeClass( "cbp-spmenu-open" );
+	$("body").removeClass( "cbp-spmenu-push-toleft" );
+
+	var html = $("#propostaContainer").html();
+	var nome = $( "#tituloPagina" ).html( );
+	
+	isPropostaEditModel = true;
+	
+	$.get( "app/proposta/novo.html", function( data ) {
+	   $( "body" ).html( data );	  
+	   var element = document.querySelector("trix-editor");
+	   //element.editor.setSelectedRange([0, $('#xHelp')[0].value.length ]);
+	   element.editor.insertHTML( html );
+	   
+	   console.log( nome );
+	   console.log( $("input[name='nome']") );
+	   $("input[name='nome']").val( nome );
+	   $("input[name='identificador']").val( idProspostaAtual );
+		
+ //	  montaListaComoFazer();
+	});
+}
 
 function removeProposta(me){
 	console.log('>>>nao implementado<<<<', me.parentElement);
@@ -50,7 +77,7 @@ function novaProposta(){
 	
 	$.get( "app/proposta/novo.html", function( data ) {
 	  $( "body" ).html( data );	  
-	  montaListaComoFazer();
+//	  montaListaComoFazer();
 	});
 }
 function isPropostaAnaliseChecke(propostas, id){
@@ -103,19 +130,26 @@ function showPropostaAnalise(id, component){
 		$( component ).append( div );		  
 	});
 }
-function showProposta(id){
+function showProposta(id, nome){
+	idProspostaAtual = id;
+	$( "#tituloPagina" ).html( nome );
 	var url = "./base/proposta/"+id+"/index.html";
-	
 	$.get( url, function( data ) {
 		  $( "#propostaContainer" ).html( data );		  
 	});
 }
 function montaListaProposta(){
+	
+	if( $( "#idProposta" ).length == 0 ){
+		$.get( "app/proposta/index.html", function( data ) {
+			  $( "body" ).html( data );
+		});
+	}
+	
 	wrapper.getPropostas(function( data ) {
-		  console.log("-->"+data);
 		  
 		  $.each( data, function (index, proposta){
-			  var html = "<div class='class-proposta'><a href='#' onClick=\"showProposta(\'"+proposta.id+"\'); return false\"><h4>"+proposta.nome+"</h4></a></div>";
+			  var html = "<div class='class-proposta'><a href='#' onClick=\"showProposta(\'"+proposta.id+"\', \'"+proposta.nome+"\'); return false\"><h4>"+proposta.nome+"</h4></a></div>";
 			  console.log( '===>'+html );
 			  $( "#idProposta" ).append(html);
 		  });

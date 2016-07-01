@@ -2,6 +2,68 @@ var isAcaoEditModel = false;
 var isAcaoDeleteModel = false;
 var myCodeMirror = null;
 
+//-------ROTA----
+//Path.root("#/home");
+Path.map("#/listaAcao").to(openListaAcao);
+Path.map("#/acao/:id/:nome").to(function(){
+    var id = this.params['id'];
+    var nome = this.params['nome'];
+    console.log(id, nome);
+    
+    $.get( "app/acao/acao.html", function( data ) {
+		  $( "body" ).html( data );
+		  showAcao(id, nome);
+	});
+});
+//Path.map("#/acao/:id").to( function(){
+//	console.log('.x.x.x.x');
+//	showAcao(this.params['id'], "teste");
+//});
+//----FIM ROTA----
+
+function addLink(){
+	var nomeLink = $('#nomeLink').val();
+	var endLink = $('#endLink').val();
+	
+	$('#nomeLink').val("");
+	$('#endLink').val("");
+	console.log( nomeLink+ " - "+endLink );
+	
+	var html = "<p><a href='"+endLink+"' >"+nomeLink+"</a></p>";
+	
+	console.log( $('.link-content') );
+	$('.link-content').append(html);
+	
+	var p = $("#page-wrapper").find(".col-lg-12:last");
+	$("#page-wrapper").find(".link").remove();
+	html = '<div class="link">\
+		'+$('.link-content').html()+'</div>';
+
+	p.append( html );
+
+	$('#nomeLink').focus();
+}
+
+function cadastrarRef(){
+	var idAcao = $('#idAcaoAtual').val();
+	
+	$('#myModal .modal-title').html("Referencia");
+	
+	var url = "./app/acao/refs.html";
+	
+	$.get( url, function( data ) {
+		$('#myModal .modal-body').html( data);
+		var link = $("#page-wrapper").find(".link");
+		if( link ){
+			var html = link.first().html();
+			console.log( html );
+			$('.link-content').append(html);
+		}
+	  });
+	
+	$('#myModal').modal('show');
+}
+
 function atualizaTela(){
 	var idAcao = $('#idAcaoAtual').val();
 	console.log('atualizaTela: '+idAcao);
@@ -25,12 +87,14 @@ function modoEdicaoHTML(){
 		$('.row').remove();
 		var html = '\<div class="form-editor">\
 			<input id="identificador" type="hidden" name="identificador">\
-			<textarea class="conteudo-textarea" rows="20" cols="100"></textarea>\
+			<textarea class="conteudo-textarea" rows="40" cols="100"></textarea>\
 			  </div>';
 		$('.container-fluid').append( html );
 		
 		var id = $('#idAcaoAtual').val();
 		limpaConteudo();
+		conteudo = formatXml(conteudo);
+		
 		$(".conteudo-textarea").val(conteudo);
 
 		myCodeMirror = CodeMirror.fromTextArea($(".conteudo-textarea")[0]);
@@ -89,11 +153,12 @@ function moduloExclusao(){
 function removeItem(me){
 	var p = me.parentElement.parentElement.parentElement;
 	
-	if( !isAcaoEditModel ){
-		var trash = $('.trash');
-		trash.remove();
-	}
-	
+//	if( !isAcaoEditModel ){
+//		var trash = $('.trash');
+//		trash.remove();
+//	}
+	console.log( $('.modulo-edicao') );
+	$('.modulo-edicao').show();
 	$(p).remove();
 }
 
@@ -113,15 +178,39 @@ function limpaConteudo(){
 	panel.attr("style", "display: none");
 	$('.trash').remove();
 }
+function salvaRapido(){
+	var nomeAcao = $('#nomeAcao');
+	nomeAcao = nomeAcao.html();
+	limpaConteudo();
+	var html = $('#acaoContainer').html();
+	
+	console.log( html );
+	
+	return;
+	
+	$.post( "/acao",  {idAcao:idAcao, nomeAcao:nomeAcao, conteudo:html} )
+	.done(function( json ) {
+		
+		if( json.sucesso ){
+			$('#myModal .modal-title').html("Sucesso!");
+		}else{
+			$('#myModal .modal-title').html("Problema!");
+		}
+		$('#myModal .modal-body').html( json.dado);
+		$('#myModal').modal('show')
+	  });
+}
 function salvaAcao(){
 	var nomeAcao = $('#nomeAcao').val();
 	var idAcao = $('#identificador').val();
+	
+	
 	if( nomeAcao.length == 0 ){
 		alert("Nome da acao deve ser informado");
 		return;
 	}
 	var html = "";
-	if( $(".row").length >0 ){ //modulo vormulario
+	if( $(".row").length >0 ){ //modulo formulario
 		var p = $("#wrapper").find(".col-lg-12");
 		limpaConteudo();
 		html = p.html().trim();
@@ -193,7 +282,7 @@ function novaAcao(id){
 	$.get( "app/acao/novo.html", function( data ) {
 		  $( "body" ).html( data );
 		  if( id ){
-			  var url = "./acao/"+id+"/index.html";				
+			  var url = "./base/acao/"+id+"/index.html";				
 			  var p = $("#page-wrapper").find(".col-lg-12");
 			  $('#identificador').val(id);
 			  $.get( url, function( data ) {
@@ -215,7 +304,7 @@ function showAtividade(me){
 	var p = me.parentElement.parentElement.parentElement;
 	p = $(p).find('.panel-body');
 	var cn = p.attr('style');
-	if( cn.indexOf('none') >= 0 ){
+	if( cn && cn.indexOf('none') >= 0 ){
 		p.show();
 	}else{
 		p.hide();
@@ -223,6 +312,7 @@ function showAtividade(me){
 }
 
 function openListaAcao(){
+	
 	$("nav").removeClass( "cbp-spmenu-open" );
 	$("body").removeClass( "cbp-spmenu-push-toleft" );
 	
@@ -236,10 +326,10 @@ function openListaAcao(){
 
 function montaListaAcao(){
 	isAcaoEditModel = false;
-	
 	wrapper.getAcoes(function( data ) {
 		  $.each( data, function (index, acao){
-			  var html = "<a href='#' onClick=\"showAcao(\'"+acao.id+"\', '"+acao.nome+"'); return false\"><h4>"+acao.nome+"</h4></a>";
+			  //var html = "<a href='#/acao' onClick=\"/*showAcao(\'"+acao.id+"\', '"+acao.nome+"'); return false;*/\"><h4>"+acao.nome+"</h4></a>";
+			  var html = "<a href='#/acao/"+acao.id+"/"+acao.nome+"' onClick=\"/*showAcao(\'"+acao.id+"\', '"+acao.nome+"'); return false;*/\"><h4>"+acao.nome+"</h4></a>";
 			  $( "#idAcao" ).append(html);
 		  });
 		}
@@ -259,3 +349,55 @@ function showAcao(id, nomeAcao){
 		});
 	}
 }
+
+function formatXml (xml) {
+    //var reg = /(>)(<)(\/*)/g;
+    var reg = /(>)\s*(<)(\/*)/g;
+    var wsexp = / *(.*) +\n/g;
+    var contexp = /(<.+>)(.+\n)/g;
+    xml = xml.replace(reg, '$1\n$2$3').replace(wsexp, '$1\n').replace(contexp, '$1\n$2');
+    var pad = 0;
+    var formatted = '';
+    var lines = xml.split('\n');
+    var indent = 0;
+    var lastType = 'other';
+    // 4 types of tags - single, closing, opening, other (text, doctype, comment) - 4*4 = 16 transitions 
+    var transitions = {
+        'single->single'    : 0,
+        'single->closing'   : -1,
+        'single->opening'   : 0,
+        'single->other'     : 0,
+        'closing->single'   : 0,
+        'closing->closing'  : -1,
+        'closing->opening'  : 0,
+        'closing->other'    : 0,
+        'opening->single'   : 1,
+        'opening->closing'  : 0, 
+        'opening->opening'  : 1,
+        'opening->other'    : 1,
+        'other->single'     : 0,
+        'other->closing'    : -1,
+        'other->opening'    : 0,
+        'other->other'      : 0
+    };
+
+    for (var i=0; i < lines.length; i++) {
+        var ln = lines[i];
+        var single = Boolean(ln.match(/<.+\/>/)); // is this line a single tag? ex. <br />
+        var closing = Boolean(ln.match(/<\/.+>/)); // is this a closing tag? ex. </a>
+        var opening = Boolean(ln.match(/<[^!].*>/)); // is this even a tag (that's not <!something>)
+        var type = single ? 'single' : closing ? 'closing' : opening ? 'opening' : 'other';
+        var fromTo = lastType + '->' + type;
+        lastType = type;
+        var padding = '';
+
+        indent += transitions[fromTo];
+        for (var j = 0; j < indent; j++) {
+            padding += '    ';
+        }
+
+        formatted += padding + ln + '\n';
+    }
+
+    return formatted;
+};

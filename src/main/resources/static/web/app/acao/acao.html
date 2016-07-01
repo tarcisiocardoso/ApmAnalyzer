@@ -12,8 +12,6 @@
 											<li><a class="active" href="#" onClick="novaAcao(); return false;">Nova ação</a></li>
 											<li><a href="#" onClick="moduloEdicao(); return false;">Editar</a></li>
 											<li><a href="#" onClick="moduloExclusao(); return false;">Excluir</a></li>
-											<li><a href="blog.html">Blog</a></li>
-											<li><a href="contact.html">Contact</a></li>
 										</ul>
 
 									</nav>
@@ -44,9 +42,11 @@
 									 </script>
 							</div>
 							<div class="logo wow fadeInDown animated" data-wow-delay=".0s">
-								<h1><a href="#" onClick="atualizaTela(); return false;"id='nomeAcao'>execução</a></h1>
+								<h1><a href="#" onClick="atualizaTela(); return false;" id='nomeAcao'>Atividade de Execução</a></h1>
+								
 							</div>
 							<div class="clearfix"> </div>
+							
 						</div>
 					</div>
 				</div>
@@ -54,9 +54,15 @@
 				
 				<!-- about -->
 				<div class="about">
+					<div class='modulo-edicao' style="display:none">
+						<button class="btn btn-default" type="button" onClick="salvaRapido();"><i class="fa fa-save"></i></button>
+					</div>
 					<input type="hidden" name="idAcao" id="idAcaoAtual">
+					
 					<div class="about-heading" id='acaoContainer'>
+						
 						<div class="container">
+								
 							<div class="about-heading-info wow fadeInDown animated" data-wow-delay=".0s" id='idAcao'>
 								
 							</div>

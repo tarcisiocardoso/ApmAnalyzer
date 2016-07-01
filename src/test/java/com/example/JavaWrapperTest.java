@@ -14,11 +14,21 @@ import br.com.xyx.apmanalyzer.server.controller.proposta.Proposta;
 import junit.framework.TestCase;
 
 public class JavaWrapperTest extends TestCase{
+
+	//-DrootPath=src/main/resources/
+	{
+		System.out.println(">>>primeiro<<<");
+		JavaWrapper.PATH = "src/main/resources/static/web/base/";
+		JavaWrapper.PATH_ACAO = JavaWrapper.PATH + "/acao";
+		JavaWrapper.PATH_COMO_FAZER = JavaWrapper.PATH + "/como_fazer";
+		JavaWrapper.PATH_PROPOSTA = JavaWrapper.PATH + "/proposta";
+		JavaWrapper.PATH_ANALISE = JavaWrapper.PATH + "/analise";
+	}
 	
 	public void testNada(){
 		assertEquals( 1==1, true );
 	}
-/*
+
 	public void testSalvaProposta(){
 		String id = null;
 		String nome = "aaaa";
@@ -163,5 +173,5 @@ public class JavaWrapperTest extends TestCase{
 		
 		assertEquals(json != null, true);
 	}
-	*/
+	
 }

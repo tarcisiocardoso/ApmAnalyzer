@@ -11,12 +11,12 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,6 +38,8 @@ public class JavaWrapper {
 	public static String PATH_COMO_FAZER = PATH + "/como_fazer";
 	public static String PATH_PROPOSTA = PATH + "/proposta";
 	public static String PATH_ANALISE = PATH + "/analise";
+	
+	private static final int TAMANHO_BLOCO = 20;
 	
 	public Collection<ComoFazer> getAllComoFazer() {
 		String base = "como_fazer";
@@ -117,6 +119,14 @@ public class JavaWrapper {
 			e.printStackTrace();
 		}
 
+		// Sorting
+		Collections.sort(list, new Comparator<Analise>() {
+		        @Override
+		        public int compare(Analise a2, Analise a1){
+		            return  a1.nome.compareTo(a2.nome);
+		        }
+		    });
+		
 		return list;
 	}
 
@@ -164,7 +174,6 @@ public class JavaWrapper {
 		HashMap<String, String> hm = new HashMap<>();
 		try {
 			if( !file.isFile() ){
-				System.out.println( file.getAbsolutePath() );
 				file.createNewFile();
 			}
 			pro.load( new FileInputStream(file) );
@@ -199,8 +208,8 @@ public class JavaWrapper {
 		if (id == null || id.trim().length() == 0) {
 			String nm = nome;
 			nm = nm.replaceAll(" ", "_");
-			if (nm.length() > 10) {
-				nm = nm.substring(0, 10);
+			if (nm.length() > TAMANHO_BLOCO) {
+				nm = nm.substring(0, TAMANHO_BLOCO);
 			}
 			id = System.currentTimeMillis() + "_" + nm;
 		}
@@ -319,15 +328,12 @@ public class JavaWrapper {
 		if( id == null) throw new Exception("id da questao deve ser informado");
 		if( valor == null ) throw new Exception("Novo valor deve ser informado");
 		
-		System.out.println("buscando: "+id);
-		
 		File file = new File(PATH_ANALISE + "/" + idAnalise);
 		File[] fs = file.listFiles();
 		File fAtributo = null;
 		for (File f : fs) {
 			if (f.isDirectory()) {
 				String key = f.getName();
-				System.out.println(key);
 				if( key.equals(id) ){
 					fAtributo = f;
 					continue;
@@ -342,10 +348,10 @@ public class JavaWrapper {
 		}
 		System.out.println("====================");
 		
-		fs = fAtributo.listFiles();
-		for (File f : fs) {
-			System.out.println( f.getName() );
-		}
+//		fs = fAtributo.listFiles();
+//		for (File f : fs) {
+//			System.out.println( f.getName() );
+//		}
 		switch (tipo){
 			case "nome":
 				mudaAnaliseAtributoNome(id, fAtributo, valor);
@@ -369,20 +375,16 @@ public class JavaWrapper {
 		}
 	}
 	private void mudaAnaliseAtributoNome(String id, File file, String valor) throws Exception {
-		System.out.println(file.getAbsolutePath() );
 		String nm = file.getAbsolutePath();
 		nm = nm.substring(0, nm.length() - id.length() );
-		System.out.println( nm );
 		addInit(nm, id, valor);
 		
 	}
 	private File buscaAnaliseAtributo(File file, String id) {
-		System.out.println(file.getAbsolutePath() );
 		File[] fs = file.listFiles();
 		for (File f : fs) {
 			if (f.isDirectory()) {
 				String key = f.getName();
-				System.out.println(key);
 				if( key.equals(id) ){
 					return f;
 				}else{
