@@ -1,34 +1,38 @@
 package com.example;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import br.com.xyx.apmanalyzer.desktop.JavaWrapper;
-import br.com.xyx.apmanalyzer.server.controller.analise.Analise;
-import br.com.xyx.apmanalyzer.server.controller.analise.Help;
-import br.com.xyx.apmanalyzer.server.controller.analise.Questao;
-import br.com.xyx.apmanalyzer.server.controller.analise.Resposta;
-import br.com.xyx.apmanalyzer.server.controller.comoFazer.ComoFazer;
-import br.com.xyx.apmanalyzer.server.controller.proposta.Proposta;
+import br.com.xyx.apmanalyzer.server.controller.atividade.Atividade;
 import junit.framework.TestCase;
 
 public class JavaWrapperTest extends TestCase{
 
 	//-DrootPath=src/main/resources/
 	{
-		System.out.println(">>>primeiro<<<");
 		JavaWrapper.PATH = "src/main/resources/static/web/base/";
 		JavaWrapper.PATH_ACAO = JavaWrapper.PATH + "/acao";
 		JavaWrapper.PATH_COMO_FAZER = JavaWrapper.PATH + "/como_fazer";
 		JavaWrapper.PATH_PROPOSTA = JavaWrapper.PATH + "/proposta";
 		JavaWrapper.PATH_ANALISE = JavaWrapper.PATH + "/analise";
+		JavaWrapper.PATH_ATIVIDADE = JavaWrapper.PATH + "/atividade";
 	}
 	
 	public void testNada(){
 		assertEquals( 1==1, true );
 	}
-
+	public void testeSalvaAtividade(){
+		String id = null;
+		String nome = "aaaa";
+		String conteudo = "<b>de qual e</b>";
+		try {
+			JavaWrapper w = new JavaWrapper();
+			id = w.salvaAtividade(new Atividade( id, nome, conteudo) );
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals( id != null, true );
+	}
+/*
 	public void testSalvaProposta(){
 		String id = null;
 		String nome = "aaaa";
@@ -36,6 +40,38 @@ public class JavaWrapperTest extends TestCase{
 		try {
 			JavaWrapper w = new JavaWrapper();
 			id = w.salvaProposta(new Proposta( id, nome, conteudo) );
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals( id != null, true );
+	}
+	public void testRemoveProposta(){
+		String id = null;
+		try {
+			JavaWrapper w = new JavaWrapper();
+			id = w.removeProposta( "1467642154079_pppp" );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals( id != null, true );
+	}
+	public void testRemoveComoFazer(){
+		String id = null;
+		try {
+			JavaWrapper w = new JavaWrapper();
+			id = w.removeComoFazer( "1466717392592_tttttt" );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals( id != null, true );
+	}
+	public void testRemoveAcao(){
+		String id = null;
+		try {
+			JavaWrapper w = new JavaWrapper();
+			
+			id = w.removeAcao( "1467642265602_aaaaaa" );
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,7 +109,7 @@ public class JavaWrapperTest extends TestCase{
 		String json = null;
 		JavaWrapper w = new JavaWrapper();
 		try {
-			json = w.recuperaAnaliseByIdJson("xptoII");
+			json = w.recuperaAnaliseByIdJson("1467827941435_aaaa");
 			System.out.println( json );
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -173,5 +209,5 @@ public class JavaWrapperTest extends TestCase{
 		
 		assertEquals(json != null, true);
 	}
-	
+*/	
 }

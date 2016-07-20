@@ -15,41 +15,56 @@ function editaProposta(){
 	$.get( "app/proposta/novo.html", function( data ) {
 	   $( "body" ).html( data );	  
 	   var element = document.querySelector("trix-editor");
-	   //element.editor.setSelectedRange([0, $('#xHelp')[0].value.length ]);
 	   element.editor.insertHTML( html );
-	   
 	   console.log( nome );
 	   console.log( $("input[name='nome']") );
 	   $("input[name='nome']").val( nome );
 	   $("input[name='identificador']").val( idProspostaAtual );
-		
- //	  montaListaComoFazer();
 	});
 }
 
-function removeProposta(me){
-	console.log('>>>nao implementado<<<<', me.parentElement);
+function removePropostaServidor(){
+	console.log('>>>removeProposta<<<');
+//	console.log('>>>nao implementado<<<<', me.parentElement);
+	if( idProspostaAtual ){
+		$.post( "/proposta/remove",  {identificador:idProspostaAtual} ).done(function( json ) {
+			openListaProposta();
+		 });
+	}
 }
 function moduloExclusaoProposta(){
 	$("nav").removeClass( "cbp-spmenu-open" );
 	$("body").removeClass( "cbp-spmenu-push-toleft" );
 	
-	isPropostaDeleteModel = !isPropostaDeleteModel;
-	
-	console.log('isPropostaDeleteModel: '+isPropostaDeleteModel);
-
-	if( isPropostaDeleteModel ){
-		var content = $('.class-proposta');
-		console.log( content  );
+	if( idProspostaAtual){
+		$('#myModal .modal-title').html("Exclusão da Proposta");
 		
-		var html =
-	    	'\
-			<button class="btn btn-default pull-right trash" type="button" onClick="removeProposta(this)"><i class="fa fa-trash"></i></button>\
-	    	';
-		content.append( html );	
+		$('#myModal .modal-body').html("<h3>Confirma exclusão?</h3>");
+		var btn = $('#myModal').find(".btn-ok");
+		
+		btn.show();
+		
+		btn.attr("onclick", "removePropostaServidor();");
+	
+		$('#myModal').modal('show');
 	}else{
-		console.log('>>>>>>removendo<<<<<<<<');
-		$('.trash').remove();
+		isPropostaDeleteModel = !isPropostaDeleteModel;
+		
+		console.log('isPropostaDeleteModel: '+isPropostaDeleteModel);
+	
+		if( isPropostaDeleteModel ){
+			var content = $('.class-proposta');
+			console.log( content  );
+			
+			var html =
+		    	'\
+				<button class="btn btn-default pull-right trash" type="button" onClick="removeProposta(this)"><i class="fa fa-trash"></i></button>\
+		    	';
+			content.append( html );	
+		}else{
+			console.log('>>>>>>removendo<<<<<<<<');
+			$('.trash').remove();
+		}
 	}
 }
 
@@ -118,13 +133,13 @@ function openListaProposta(){
 		  montaListaProposta();
 	});
 }
-function showPropostaAnalise(id, component){
+function showPropostaAnalise(id, component, nome){
 	var url = "./base/proposta/"+id+"/index.html";
 	
 	$.get( url, function( data ) {
 		var div = document.createElement('div');
 		div.className='panel-proposta';
-		div.innerHTML = data;
+		div.innerHTML = "<h3>"+nome+"</h3>"+data;
 		$(div).attr("name", id);
 		
 		$( component ).append( div );		  

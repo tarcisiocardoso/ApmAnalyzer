@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>Canvas tutorial</title>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/CanvasInput.js"></script>
+<script type="text/javascript" src="js/MapMind.js"></script>
+<script type="text/javascript" src="js/atividade.js"></script>
+
+<!-- load trix -->
+<link rel="stylesheet" type="text/css" href="./trix/trix.css">
+<script type="text/javascript"         src="./trix/trix.js"></script>  
+<script type="text/javascript"         src="./trix/attachments.js"></script>
+<!-- load trix -->
+
+
+<!-- bootstrap-css -->
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+	
+	$('body').on('contextmenu', '#canvas', function(e){ 
+		console.log('xxxx');
+		return false; });
+</script>
+<style type="text/css">
+canvas {
+	border: 1px solid black;
+}
+</style>
+</head>
+<body>
+	
+	<canvas id="canvas" tabindex="1" width="1024" height="768"></canvas>
+	<div style='display: none'>
+		<!-- <img id="source"
+			src="https://mdn.mozillademos.org/files/5397/rhino.jpg" width="300"
+			height="227"> <img id="frame"
+			src="https://mdn.mozillademos.org/files/242/Canvas_picture_frame.png"
+			width="132" height="150">
+			 -->
+	</div>
+	<P>
+		<button type="button" onClick="save();" class="btn btn-default" data-dismiss="modal">Salva</button>
+	</P>
+</body>
+</html>
+
+<script>
+
+	mm.make();
+	mm.init();
+	idAtividadeAtual = '1468950631108_teste';
+	openAtividade();
+	
+	/* function openAtividade(){
+		var id = '1468427813124_teste';
+		var url = "./base/atividade/"+id+"/index.html";
+		$.get( url, function( data ) {
+			mm.open(data);
+		});
+	}
+	openAtividade();
+	
+	function save(){
+		console.log('========================');
+		var json = mm.getMMJson();
+		var nome = mm.getNome();
+		
+		console.log(nome);
+		return;
+
+		$.post( "/atividade",  {id: '1468427813124_teste', nome: 'teste', conteudo: json } ).done(function( json ) {
+			console.log(json);
+			if (json.sucesso) {
+				$('#myModal .modal-title').html("Sucesso!");
+			} else {
+				$('#myModal .modal-title').html("Problema!");
+			}
+			$('#myModal .modal-body').html(json.dado);
+			$('#myModal').modal('show');
+		 });
+		
+		
+		console.log('========================');
+	} */
+</script>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="detalheModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Detalhe</h4>
+      </div>
+      <div class="modal-body">
+        <form id="formulario" >
+			<div class="form-group">
+				<label>Nome da analise</label>
+				<input class="form-control" name="nodeName" id="nodeName">
+				<input id="x" type="hidden" name="content">
+				<trix-editor input="x"></trix-editor>
+			</div>
+		</form>
+		<div id="view-container">
+			
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onClick="mm.atualizaNo();" class="btn btn-default" data-dismiss="modal">Salva</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+

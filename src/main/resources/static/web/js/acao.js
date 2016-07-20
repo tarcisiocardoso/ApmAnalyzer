@@ -1,6 +1,8 @@
 var isAcaoEditModel = false;
 var isAcaoDeleteModel = false;
 var myCodeMirror = null;
+var idAcaoAtual = null;
+var itemAcaoEditado = null;
 
 //-------ROTA----
 //Path.root("#/home");
@@ -136,19 +138,43 @@ function modoEdicaoHTML(){
 	console.log('idAcao-> '+idAcao );
 	$('#identificador').val(idAcao);
 }
+function excluiAcao(){
+	if( idAcaoAtual ){
+		$.post( "/acao/remove",  {idAcao:idAcaoAtual} ).done(function( json ) {
+			openListaAcao();
+		 });
+	}
+}
+
 function moduloExclusao(){
 	$("nav").removeClass( "cbp-spmenu-open" );
 	$("body").removeClass( "cbp-spmenu-push-toleft" );
 	
-	isAcaoDeleteModel = true;
+	if( idAcaoAtual ){
+		var idAcao = $('#idAcaoAtual').val();
+		
+		$('#myModal .modal-title').html("Exclusão da ação");
+		
+		$('#myModal .modal-body').html("<h3>Confirma exclusão?</h3>");
+		var btn = $('#myModal').find(".btn-ok");
+		
+		btn.show();
+		
+		btn.attr("onclick", "excluiAcao()");
 	
-	var content = $('.panel-title');
-	
-	var html =
-    	'\
-		<button class="btn btn-default pull-right trash" type="button" onClick="removeItem(this)"><i class="fa fa-trash"></i></button>\
-    	';
-	content.append( html );
+		$('#myModal').modal('show');
+	}else {
+		console.log( idAcaoAtual );
+		isAcaoDeleteModel = true;
+		
+		var content = $('.panel-title');
+		
+		var html =
+	    	'\
+			<button class="btn btn-default pull-right trash" type="button" onClick="removeItem(this)"><i class="fa fa-trash"></i></button>\
+	    	';
+		content.append( html );
+	}
 }
 function removeItem(me){
 	var p = me.parentElement.parentElement.parentElement;
@@ -230,12 +256,37 @@ function salvaAcao(){
 		$('#myModal').modal('show')
 	  });
 }
+function salvaItem(){
+	console.log('salvaItem...');
+	var corpo = $('#x')[0].value;
+	
+	var p = itemAcaoEditado.parentElement.parentElement.parentElement;
+	var titulo = $(p).find(".panel-title span");
+	p = $(p).find('.panel-body');
+	
+	p.html( corpo );
+	
+	$("#panelPrincipal .fa-plus").html("Add");
+	$("#panelPrincipal").find(".btn-default:first").attr("onclick","addNovoItem()");
+	$("#panelPrincipal label").html("Novo item");
+	
+	var element = document.querySelector("trix-editor");
+	element.editor.setSelectedRange([0, corpo.length ]);
+    element.editor.deleteInDirection("forward");
+    
+    $('#myModal .modal-title').html("Conteudo modificado");
+	
+	$('#myModal .modal-body').html( corpo );
+	titulo.html( $("#panelPrincipal #nomeItem").val() );
+	$("#panelPrincipal #nomeItem").val("");
+	$('#myModal').modal('show');
+}
 function addNovoItem(){
 	var p = $("#page-wrapper").find(".col-lg-12:last");
 	
 	var nm = $('#nomeItem');
 	var titulo = nm.val();
-	var element = document.querySelector("trix-editor")
+	var element = document.querySelector("trix-editor");
 	var corpo = $('#x')[0].value;//element.editor.getDocument().toString()
 	if( titulo.length == 0 ){
 		alert("Informe no nome do item a ser inserido");
@@ -255,8 +306,8 @@ function addNovoItem(){
     	'\
 		<div class="panel panel-primary">\
 			<div class="panel-heading">\
-	        <h3 class="panel-title"><i class="fa fa-check-square-o"></i>'+qtd+' - '+titulo+
-	        	'<button class="btn btn-default" type="button" onClick="showAtividade(this)"><i class="fa fa-check-square-o"></i></button>\
+	        <h3 class="panel-title"><i class="fa fa-check-square-o"></i><span>'+qtd+' - '+titulo.trim()+
+	        	'</span><button class="btn btn-default" type="button" onClick="showAtividade(this)"><i class="fa fa-check-square-o"></i></button>\
 	        	<button class="btn btn-default pull-right trash" type="button" onClick="removeItem(this)"><i class="fa fa-trash"></i></button>\
 	        </h3>\
 		    </div>\
@@ -301,13 +352,36 @@ function novaAcao(id){
 }
 
 function showAtividade(me){
+	itemAcaoEditado = me;
+	
+	console.log('isAcaoEditModel: '+isAcaoEditModel );
 	var p = me.parentElement.parentElement.parentElement;
+	var titulo = $(p).find(".panel-title span").html();
+	
 	p = $(p).find('.panel-body');
-	var cn = p.attr('style');
-	if( cn && cn.indexOf('none') >= 0 ){
-		p.show();
+	
+	if( isAcaoEditModel ){
+		console.log( $("#panelPrincipal .fa-plus") );
+		$("#panelPrincipal .fa-plus").html("Salva");
+		$("#panelPrincipal").find(".btn-default:first").attr("onclick","salvaItem()");
+		
+		$("#panelPrincipal label").html("Nome do item");
+		$("#panelPrincipal #nomeItem").val(titulo);
+		
+		
+		var element = document.querySelector("trix-editor");
+		var corpo = $('#x')[0].value;
+		element.editor.setSelectedRange([0, corpo.length ]);
+	    element.editor.deleteInDirection("forward");
+		element.editor.insertHTML( p.html() );
 	}else{
-		p.hide();
+		
+		var cn = p.attr('style');
+		if( cn && cn.indexOf('none') >= 0 ){
+			p.show();
+		}else{
+			p.hide();
+		}
 	}
 }
 
@@ -337,6 +411,7 @@ function montaListaAcao(){
 }
 
 function showAcao(id, nomeAcao){
+	idAcaoAtual = id;
 	var url = "./base/acao/"+id+"/index.html";
 	if( isAcaoEditModel ){
 		novaAcao(id);

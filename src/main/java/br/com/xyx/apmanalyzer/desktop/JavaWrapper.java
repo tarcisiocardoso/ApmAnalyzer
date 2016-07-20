@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,6 +29,7 @@ import br.com.xyx.apmanalyzer.server.controller.analise.Analise;
 import br.com.xyx.apmanalyzer.server.controller.analise.Help;
 import br.com.xyx.apmanalyzer.server.controller.analise.Questao;
 import br.com.xyx.apmanalyzer.server.controller.analise.Resposta;
+import br.com.xyx.apmanalyzer.server.controller.atividade.Atividade;
 import br.com.xyx.apmanalyzer.server.controller.comoFazer.ComoFazer;
 import br.com.xyx.apmanalyzer.server.controller.proposta.Proposta;
 
@@ -38,6 +41,7 @@ public class JavaWrapper {
 	public static String PATH_COMO_FAZER = PATH + "/como_fazer";
 	public static String PATH_PROPOSTA = PATH + "/proposta";
 	public static String PATH_ANALISE = PATH + "/analise";
+	public static String PATH_ATIVIDADE = PATH + "/atividade";
 	
 	private static final int TAMANHO_BLOCO = 20;
 	
@@ -130,6 +134,39 @@ public class JavaWrapper {
 		return list;
 	}
 
+	public String getNomeProposta(String id){
+		String base = "proposta";
+		String nome = "Não encontrado";
+		try {
+			Properties hm = this.getInit(base);
+			nome = (hm.containsKey(id)) ? hm.getProperty(id) : id;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return nome;	
+	}
+	public Collection<Atividade> getAllAtividades() {
+		String base = "atividade";
+		File file = new File(PATH + base);
+		ArrayList<Atividade> list = new ArrayList<>();
+		try {
+			Properties hm = this.getInit(base);
+			// String uri = file.toURI().toURL().toString();
+			File[] fs = file.listFiles();
+			for (File f : fs) {
+				if (f.isDirectory()) {
+					String key = f.getName();
+					String nome = (hm.containsKey(key)) ? hm.getProperty(key) : key;
+					list.add(new Atividade(key, nome));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
 	public Collection<Proposta> getAllPropostas() {
 		String base = "proposta";
 		File file = new File(PATH + base);
@@ -146,11 +183,9 @@ public class JavaWrapper {
 					list.add(new Proposta(key, nome));
 				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return list;
 	}
 
@@ -215,6 +250,61 @@ public class JavaWrapper {
 		}
 		return id;
 	}
+	
+	public String removeAtividade(String id) throws Exception{
+		File file = new File(PATH_ATIVIDADE + "/" + id);
+		System.out.println( file.getAbsolutePath() );
+		if( file.exists() ){
+			try{
+				FileUtils.deleteDirectory( file );
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new Exception ("Problema imprevisto: "+e.getMessage() );
+			}
+		}
+		return "ok";
+	}
+	public String removeProposta(String id) throws Exception{
+		File file = new File(PATH_PROPOSTA + "/" + id);
+		System.out.println( file.getAbsolutePath() );
+		if( file.exists() ){
+			try{
+				FileUtils.deleteDirectory( file );
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new Exception ("Problema imprevisto: "+e.getMessage() );
+			}
+		}
+		return "ok";
+	}
+	public String removeComoFazer(String id) throws Exception{
+		File file = new File(PATH_COMO_FAZER + "/" + id);
+		System.out.println( file.getAbsolutePath() );
+		if( file.exists() ){
+			try{
+				FileUtils.deleteDirectory( file );
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new Exception ("Problema imprevisto: "+e.getMessage() );
+			}
+		}
+		return "ok";
+	}
+	
+	public String removeAcao(String id) throws Exception{
+		File file = new File(PATH_ACAO + "/" + id);
+		System.out.println( file.getAbsolutePath() );
+		if( file.exists() ){
+			try{
+				FileUtils.deleteDirectory( file );
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new Exception ("Problema imprevisto: "+e.getMessage() );
+			}
+		}
+		
+		return "ok";
+	}
 	public String salvaAcao(String id, String nome, String conteudo) throws Exception {
 		if( nome == null || nome.trim().length() == 0){
 			throw new Exception("Nome obrigatório");
@@ -243,6 +333,30 @@ public class JavaWrapper {
 		
 		return id;
 	}	
+	public String salvaAtividade(Atividade atividade)  throws Exception {
+		if( atividade.nome == null || atividade.nome.trim().length() == 0){
+			throw new Exception("Nome obrigatório");
+		}
+		atividade.id = formatId(atividade.id, atividade.nome);
+		
+		File file = new File(PATH_ATIVIDADE + "/" + atividade.id);
+		try {
+			if (file.isDirectory()) { // ja existe. Atualiza
+				saveFile(file.getCanonicalPath(), atividade.conteudo);
+			} else {
+				addInit(PATH_ATIVIDADE, atividade.id, atividade.nome);
+				// file.mkdir();
+				Path path = Paths.get(file.getCanonicalPath());
+				Files.createDirectories(path);
+
+				saveFile(file.getCanonicalPath(), atividade.conteudo);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return atividade.id;
+	}
 	public String salvaProposta(Proposta proposta) throws Exception {
 		if( proposta.nome == null || proposta.nome.trim().length() == 0){
 			throw new Exception("Nome obrigatório");
@@ -267,6 +381,7 @@ public class JavaWrapper {
 		}
 		return proposta.id;
 	}
+	
 	public String salvaComoFazer(ComoFazer comoFazer) throws Exception {
 		if( comoFazer.nome == null || comoFazer.nome.trim().length() == 0){
 			throw new Exception("Nome obrigatório");
@@ -307,6 +422,7 @@ public class JavaWrapper {
 		try {
 			File f = new File(path + "/init.properties");
 			if( !f.exists() ){
+				System.out.println( f.getAbsolutePath() );
 				f.createNewFile();
 			}
 			Properties p = new Properties();
@@ -503,7 +619,8 @@ public class JavaWrapper {
 
 			String linha = "";
 			while ((linha = br.readLine()) != null) {
-				conteudo.add(linha);
+				String nome = getNomeProposta(linha);
+				conteudo.add(linha+"#"+nome);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -625,5 +742,6 @@ public class JavaWrapper {
 
 		return h;
 	}
+	
 
 }

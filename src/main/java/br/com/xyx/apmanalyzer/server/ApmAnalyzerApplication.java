@@ -19,6 +19,7 @@ public class ApmAnalyzerApplication {
 			JavaWrapper.PATH_COMO_FAZER = JavaWrapper.PATH + "/como_fazer";
 			JavaWrapper.PATH_PROPOSTA = JavaWrapper.PATH + "/proposta";
 			JavaWrapper.PATH_ANALISE = JavaWrapper.PATH + "/analise";
+			JavaWrapper.PATH_ATIVIDADE = JavaWrapper.PATH + "/atividade";
 		}
 		SpringApplication.run(ApmAnalyzerApplication.class, args);
 	}

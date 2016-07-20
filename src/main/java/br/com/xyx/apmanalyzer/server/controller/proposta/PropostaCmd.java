@@ -7,6 +7,13 @@ import br.com.xyx.apmanalyzer.server.controller.comoFazer.ComoFazer;
 
 public class PropostaCmd {
 
+	public String removeProposta(String identificador)throws Exception{
+		String id = null;
+		JavaWrapper wrapper = new JavaWrapper();
+		id= wrapper.removeProposta( identificador );
+		return id;
+	}
+	
 	public String savaProposta(Proposta proposta) throws Exception{
 		String id = null;
 		JavaWrapper wrapper = new JavaWrapper();

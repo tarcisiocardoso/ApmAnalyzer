@@ -1,0 +1,138 @@
+			<div class="header-section">
+				<!-- banner -->
+				<div class="banner about-banner">
+					<div class="container">
+						<div class="header">
+							<div class="top-nav">
+									<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s2">
+										<h2>Sidebar</h2>
+										<ul>
+											<li><a href="index.html">Home</a></li>
+											<li><a class="active" href="#" onClick="novaAtividade(); return false;">Nova atividade</a></li>
+											<li><a href="#" onClick="editaProposta(); return false;" >Editar</a></li>
+											<li><a href="#" onClick="confirmaRemoveAtividade(); return false;">Excluir</a></li>
+										</ul>
+
+									</nav>
+									<div class="main buttonset">	
+											<!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
+											<button id="showRightPush"><img src="images/menu.png" alt=""/></button>
+											<!--<span class="menu"></span>-->
+									</div>
+									<!-- Classie - class helper functions by @desandro https://github.com/desandro/classie -->
+									<script src="js/classie.js"></script>
+									<script>
+										var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+										showRightPush = document.getElementById( 'showRightPush' ),
+										body = document.body;
+
+										showRightPush.onclick = function() {
+											classie.toggle( this, 'active' );
+											classie.toggle( body, 'cbp-spmenu-push-toleft' );
+											classie.toggle( menuRight, 'cbp-spmenu-open' );
+											disableOther( 'showRightPush' );
+										};
+
+										function disableOther( button ) {
+											if( button !== 'showRightPush' ) {
+												classie.toggle( showRightPush, 'disabled' );
+											}
+										}
+									 </script>
+							</div>
+							<div class="logo wow fadeInDown animated" data-wow-delay=".0s" >
+								<h1><a href="#" onClick="montaListaProposta(); return false;" id="tituloPagina">Atividade</a></h1>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					</div>
+				</div>
+				<!-- //banner -->
+				
+				<!-- about -->
+				<div class="about" id='atividadeContainer'>
+					<div class="about-heading">
+						<div class="container">
+							<div class="about-heading-info wow fadeInDown animated" data-wow-delay=".0s">
+								<ul id="idAtividade">
+								
+								</ul>
+							</div>
+							<div class="about-heading-bottom">
+								<div class="col-md-8 about-heading-right wow fadeInRight animated" data-wow-delay=".0s">
+									<h4>Papeis e responsabilidades dos membros da equipe APM. Tem como objetivo nortear o colaborador quais as fronteiras da sua atividade, quais as entradas e as saídas da atividade e qual plano de execução deve ser seguido para uma atividade ser feita com sucesso</h4>
+									<p>Indicar aqui o fluxo de definição de papeis e responsabilidade que os gestores deverão tomar:</p>									
+									Encontrado, definido ou emergido uma nova atividade que ou agregue valor ao cliente ou diminua gasto com processos internos, o gestor deve fazer os seguintes passos:
+									<ul>
+										<li>Montar uma equipe executiva que deve entender e definir os melhores passos para esse novo papel ou atividade</li>
+										<li>Montar a base de conhecimento, em seus tópicos adequados, seguindo o fluxo definido para os mesmos (Execução, Analise ou Como Fazer) </li>
+										<li>Cadastrar e lincar no mapa mental as atividades e conhecimentos daquele pavel/responsabilidades</li>
+									</ul>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //about -->
+				<!-- footer -->
+				<div class="footer">
+					<div class="container">
+						<div class="footer-bottom">
+							<div class="footer-bottom-grids">
+								<div class="footer-bottom-left wow fadeInLeft animated" data-wow-delay=".0s">
+									<p>© 2016 Xys . Todos os direitos reservados . Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+								</div>
+								<div class="footer-bottom-right icons wow fadeInRight animated" data-wow-delay=".0s">
+									<ul>
+										<li><a href="#" class="twitter"></a></li>
+										<li><a href="#" class="twitter facebook"></a></li>
+										<li><a href="#" class="twitter chrome"></a></li>
+										<li><a href="#" class="twitter dribbble"></a></li>
+									</ul>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //footer -->
+ 			</div>
+		
+		<!--smooth-scrolling-of-move-up-->
+		<script type="text/javascript">
+			$(document).ready(function() {
+				/*
+				var defaults = {
+					containerID: 'toTop', // fading element id
+					containerHoverID: 'toTopHover', // fading element hover id
+					scrollSpeed: 1200,
+					easingType: 'linear' 
+				};
+				*/
+				
+				$().UItoTop({ easingType: 'easeOutQuart' });
+				
+			});
+		</script>
+		<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+		
+		
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modulo de edição</h4>
+      </div>
+      <div class="modal-body">
+        <p><h1>Escolha um conteudo para edição</h1></p>
+      </div>
+      <div class="modal-footer">
+	    <button type="button" class="btn btn-default btn-ok" data-dismiss="modal" style="display:none">Ok</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+		

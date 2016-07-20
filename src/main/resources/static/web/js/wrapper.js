@@ -1,5 +1,14 @@
 function Wrapper(){
 
+	this.getAtividade = function( promisse ){
+		if( typeof javaWrapper === "undefined"){
+			$.get( "/atividades", promisse);
+		}else{
+			console.log('nao implementado.....');
+			var json = javaWrapper.getAllAtividadeAsJson();
+			promisse( JSON.parse(json) );
+		}
+	};
 	this.getComoFazer = function( promisse ){
 		if( typeof javaWrapper === "undefined"){
 			$.get( "/comoFazer", promisse);

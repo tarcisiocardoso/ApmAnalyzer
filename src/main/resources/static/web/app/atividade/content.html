@@ -1,0 +1,59 @@
+
+<style type="text/css">
+canvas {
+	border: 1px solid black;
+}
+</style>
+</head>
+<body>
+	<P>
+		<button type="button" onClick="save();" class="btn btn-default" data-dismiss="modal">Salva</button>
+	</P>
+	<canvas id="canvas" tabindex="1" width="800" height="600"></canvas>
+	
+</body>
+</html>
+
+<script>
+
+	mm.make();
+	mm.init();
+
+	openAtividade();
+	
+
+</script>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="detalheModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Detalhe</h4>
+      </div>
+      <div class="modal-body">
+        <form id="formulario" >
+			<div class="form-group">
+				<label>Nome da analise</label>
+				<input class="form-control" name="nodeName" id="nodeName">
+				<input id="x" type="hidden" name="content">
+				<trix-editor input="x"></trix-editor>
+			</div>
+		</form>
+		<div id="view-container">
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a class="active" href="#" onClick="novaAtividade(); return false;"></a></li>
+				<li><a href="#" onClick="editaProposta(); return false;" >Editar</a></li>
+				<li><a href="#" onClick="moduloExclusaoProposta(); return false;">Excluir</a></li>
+			</ul>
+		</div>
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" onClick="mm.atualizaNo();" class="btn btn-default" data-dismiss="modal">Salva</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
